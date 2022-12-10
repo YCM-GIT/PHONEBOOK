@@ -1,0 +1,214 @@
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+#include <stdbool.h>
+#include "double_linked_list.h"
+
+extern int ShowList(stList* pList);
+int SortPhonebook(stList* pList);
+int SortFavorite(stList* pList);
+
+
+extern int ShowList(stList* pList) {
+    // 변수 선언
+
+    if(IsEmpty(pList)==1) {   // list가 NULL 이면 에러값(-1) 리턴
+        printf("This list is empty.");
+        return -1;
+    }     
+    if (pList->sort_needs==1) {  //sort_needs=1 정렬이 필요하면 정렬시작        
+
+        //정렬기준에 따른 정렬하는 함수 콜
+        printf("*** sort by name ***\n");
+        SortPhonebook(pList);    // sort_order를 통해 정렬 기준을 바꿀 수 있어야 함. 지금은 디폴트 name 만 실행
+        PrintList(pList);     //
+        
+        //즐겨찾기를 가장 위에 정렬하는 함수 call
+        printf("*** sort by favorite ***\n");              
+        SortFavorite(pList);
+        PrintList(pList);    
+    }
+    // 인덱스 다시 넘버링
+    printf("*** renumbering ***\n");              
+    Renumbering(pList);
+    // 현재의 리스트를 print하고
+    PrintList(pList);    
+    printf("OK\n");
+    
+    return 0;
+
+}
+
+int SortPhonebook(stList* pList) {
+// 버블정렬
+    stNode* cur, *cur_next, *tmp1, *tmp2;    
+    int i,j;
+    bool switching_position=false;
+        
+    CountNode(pList); // 노드의 개수를 세기
+    
+    if ((*pList).count_node <= 1 ) {
+        printf("The number of nodes is not enough.\n");
+        return -1;
+    }
+    if ((*pList).count_node == 2 ) {
+        cur = pList->pHead;
+        cur_next = cur->pNext;
+        
+        pList->pHead = cur_next;
+        pList->pHead->pNext = cur;
+        pList->pHead->pPrev = NULL;
+
+        pList->pTail = cur;
+        pList->pTail->pPrev = cur_next;
+        pList->pTail->pNext = NULL;
+        
+        return 0;
+    }
+
+    for (i=0 ; i < (*pList).count_node + 1 ; i++) {    //버블 정렬 : 이전노드tmp와 현재노드cur를 비교하여 스위치or그대로
+        cur = pList->pHead;
+        for (j=1 ; j < (*pList).count_node - i ; j++) { 
+            cur_next = cur->pNext;     
+               
+            if(cur==pList->pHead) {  // 바로 이전 노드가 head일 때는 tmp의 이전노드가 NULL
+                //printf("1111\n");  
+                if (strcmp(cur->stData.name, cur->pNext->stData.name)==1) {  // 자리를 스위치     
+                  
+                    tmp2 = cur_next->pNext; //tmp2는 cur의 다음다음 노드를 의미함.
+                                            // cur_next와 cur의 위치를 바꿈
+                    cur->pNext = tmp2;  // cur의다음주소 기존 cur다음다음노드의 주소,
+                    cur->pPrev = cur_next;    // cur의 이전주소는 기존 cur다음노드의 주소   
+
+                    cur_next->pPrev = NULL;
+                    cur_next->pNext = cur;
+
+                    tmp2->pPrev = cur;   // 기존cur다음다음노드의 이전주소는 cur
+                    pList->pHead = cur_next;
+
+                    switching_position=true;                    
+                    //PrintList(pList);
+                }                 
+            } else if (cur_next==pList->pTail) {
+                //printf("3333\n");
+                if (strcmp(cur->stData.name, cur_next->stData.name)==1) {  // 자리를 스위치        
+
+                    tmp1 = cur->pPrev;    //tmp는 cur의 이전노드를 의미함
+                                          // cur_next와 cur의 위치를 바꿈
+                    cur->pNext = NULL;  // cur의다음주소 기존 cur다음다음노드의 주소,
+                    cur->pPrev = cur_next;    // cur의 이전주소는 기존 cur다음노드의 주소   
+
+                    cur_next->pPrev = tmp1;
+                    cur_next->pNext = cur;
+
+                    tmp1->pNext = cur_next;  // 기존 cur 이전노드의 다음주소는 기존cur의 다음노드   
+                    pList->pTail = cur;                                 
+
+                    switching_position=true; 
+                    //PrintList(pList);
+                }                    
+            } else {
+                //printf("2222\n");
+                if (strcmp(cur->stData.name, cur_next->stData.name)==1) {  // 자리를 스위치   
+                    
+                    tmp1 = cur->pPrev;    //tmp는 cur의 이전노드를 의미함
+                    tmp2 = cur_next->pNext; //tmp2는 cur의 다음다음 노드를 의미함.
+                                            // cur_next와 cur의 위치를 바꿈
+                    cur->pNext = tmp2;  // cur의다음주소 기존 cur다음다음노드의 주소,
+                    cur->pPrev = cur_next;    // cur의 이전주소는 기존 cur다음노드의 주소   
+
+                    cur_next->pPrev = tmp1;
+                    cur_next->pNext = cur;
+
+                    tmp1->pNext = cur_next;  // 기존 cur 이전노드의 다음주소는 기존cur의 다음노드          
+                    tmp2->pPrev = cur;   // 기존cur다음다음노드의 이전주소는 cur
+
+                    switching_position=true;
+                    //PrintList(pList);
+                }              
+            }
+            if(cur == pList->pTail) {
+                //printf("Tail\n");                
+            } else if (switching_position==false) { // 자리가 바뀐 경우에는 cur가 뒷쪽으로 오므로 바꿀 필요가 없음         
+                cur = cur->pNext;                   // 자리가 바뀌지 않으면 다음노드로 cur를 변경해서 반복문 실행     
+            }
+            switching_position=false;          
+        }    
+    }
+    printf("\n");
+}
+
+int SortFavorite(stList* pList) {
+//tail부터 검색해서 head에 삽입
+    stNode* cur, *tmp;
+    int count;
+    cur = pList->pTail;
+    CountNode(pList);
+    if((*pList).count_node<2) {
+        printf("The number of nodes is not enough.\n");
+        return -1;
+    }
+//    printf("%d\n", (*pList).count_node);
+    for (count=(*pList).count_node ; count > 0; count--) {
+        // tail에서 거꾸로 주소타고 올라가야 하는데, cur->pPrev를 유지하기 위해 tmp이용
+        tmp = cur->pPrev;   
+        if(cur->stData.favorite==1) {
+           // cur의 앞과 뒤 노드를 연결 
+            if(cur==pList->pTail) {
+                pList->pTail = tmp;                
+                tmp->pNext = NULL;       
+            }    
+            else {
+                cur->pNext->pPrev = tmp;   
+                tmp->pNext = cur->pNext;                         
+            }
+           // cur는 head에 삽입   (double linked list head 삽입 기능 사용)  
+           AddtoHeadNode(pList, cur);                      
+        }
+        //PrintList(pList);
+        cur = tmp;   
+    }
+    return 0;
+}
+
+// 내 파일의 function을 test 하기 위한 main 함수 나중에는 test파일로 이동
+int main(void) {
+    stList list = {0};   
+    stMember member1 = {10001, (int)1, "KIM CheolMin", "010-5324-2342", "TEAM", 0, 0};
+    stMember member2 = {10002, (int)2, "NAM HyeMin", "010-3333-2222", "SECURITY", 0, 1};
+    stMember member3 = {10003, (int)3, "YANG ChangMin", "010-5879-8156", "VEHICLE", 0 ,1};
+    stMember member4 = {10004, (int)4, "YU Mi", "010-8488-9323", "VEHICLE", 0, 0};
+    stMember member5 = {10005, (int)5, "YI TaeYeob", "032-4251-0548", "DOMAIN", 0, 0};
+    stMember member6 = {10006, (int)6, "JEONG SeungYeon", "02-257-2254", "SECURITY", 0, 1};
+    stMember member7 = {10007, (int)7, "JEONG InJae", "010-0587-3525", "DOMAIN", 0 ,1};
+    stMember member8 = {10008, (int)8, "CHOI EunBeom", "010-8759-7452", "VEHICLE", 0, 0};
+
+    list.sort_needs=1;   // 디폴트는 정렬 필요로 설정
+
+    InitializeList(&list);
+    
+    printf("****** START *****\n");
+    if(IsEmpty(&list)==1) {
+        printf("This list is empty\n");
+    }
+
+// 노드 추가
+    printf("****** Added 8 nodes *****\n");
+    AddtoTailNode(&list, member1);
+    AddtoTailNode(&list, member2);
+    AddtoTailNode(&list, member3);
+    AddtoTailNode(&list, member4);
+    AddtoTailNode(&list, member5);
+    AddtoTailNode(&list, member6);
+    AddtoTailNode(&list, member7);
+    AddtoTailNode(&list, member8);
+
+    PrintList(&list);
+
+// 5. 전체 리스트를 이름 알파벳 순서로 정렬하여 보여준다    
+// 8. 즐겨찾기 등록한 사람들은 가장 위로 따로 보여준다.
+    ShowList(&list);   
+       
+// 서브메뉴 콜은 메인 메뉴에서 실행 필요
+    
+}
