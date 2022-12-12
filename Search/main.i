@@ -2126,7 +2126,7 @@ node* getData(char*);
 node* getNode(char*);
 # 5 "main.c" 2
 
-node* getData(char*);
+
 
 int main(int argc, char *argv[]){
 

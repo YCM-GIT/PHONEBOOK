@@ -3,8 +3,6 @@
 #include <string.h>
 #include "node.h"
 
-node* getData(char*);
-
 int main(int argc, char *argv[]){
 
     char* fileName;
