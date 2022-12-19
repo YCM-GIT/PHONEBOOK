@@ -2098,7 +2098,8 @@ extern char *stpncpy (char *__restrict __dest,
 
 
 
-# 5 "node.h"
+
+# 6 "node.h"
 typedef struct Node
 {
 
@@ -2116,10 +2117,10 @@ typedef struct Node
 typedef struct SearchedList
 {
 
-    struct Node* Current;
-    struct Node* Head;
-    struct node* Tail;
-    int numberSearched;
+    struct SearchedList* NextNode;
+    struct SearchedList* PrevNode;
+    struct Node* node;
+    int matchedWith;
 } searchedList;
 
 node* getData(char*);
@@ -2127,10 +2128,24 @@ node* getNode(char*);
 # 5 "main.c" 2
 
 
-
 int main(int argc, char *argv[]){
 
     char* fileName;
+    node* dataHead = 
+# 10 "main.c" 3 4
+                    ((void *)0)
+# 10 "main.c"
+                        ;
+    node* stData = 
+# 11 "main.c" 3 4
+                  ((void *)0)
+# 11 "main.c"
+                      ;
+    node* searchedNode = 
+# 12 "main.c" 3 4
+                        ((void *)0)
+# 12 "main.c"
+                            ;
 
     if(argc < 2){
         fileName = "data.csv";
@@ -2142,15 +2157,33 @@ int main(int argc, char *argv[]){
         fileName = argv[1];
     }
 
-   node* stData = getData(fileName);
+   dataHead = getData(fileName);
+   stData = dataHead;
+
+   int value;
 
    while (stData != 
-# 24 "main.c" 3 4
+# 29 "main.c" 3 4
                    ((void *)0)
-# 24 "main.c"
+# 29 "main.c"
                        )
    {
         printf("%d %d %s %s %s %d %d\n",stData->id,stData->index,stData->name,stData->number,stData->group,stData->search_hit,stData->favorite);
         stData = stData->Next;
+   }
+
+   stData = searchDisplay(dataHead);
+
+   if(searchedNode != 
+# 37 "main.c" 3 4
+                     ((void *)0)
+# 37 "main.c"
+                         ){
+        printf("\nSearched data\n");
+        printf("ID\tIndex\tName\tNumber\t\tGroup\n");
+
+   }
+   else{
+        printf("No matched date\n");
    }
 }
