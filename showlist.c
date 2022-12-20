@@ -5,38 +5,42 @@
 #include "double_linked_list.h"
 
 extern int ShowList(stList* pList);
+extern int SortList(stList* pList);
 int SortPhonebook(stList* pList);
 int SortFavorite(stList* pList);
+void Renumbering(stList* pList);
 
 
 extern int ShowList(stList* pList) {
     // 변수 선언
 
     if(IsEmpty(pList)==1) {   // list가 NULL 이면 에러값(-1) 리턴
-        printf("This list is empty.");
+        //printf("This list is empty.");
         return -1;
     }     
     if (pList->sort_needs==1) {  //sort_needs=1 정렬이 필요하면 정렬시작        
 
         //정렬기준에 따른 정렬하는 함수 콜
-        printf("*** sort by name ***\n");
-        SortPhonebook(pList);    // sort_order를 통해 정렬 기준을 바꿀 수 있어야 함. 지금은 디폴트 name 만 실행
-        PrintList(pList);     //
+        //printf("*** sort by name ***\n");
+        SortList(pList);    // sort_order를 통해 정렬 기준을 바꿀 수 있어야 함. 지금은 디폴트 name 만 실행
+        //PrintList(pList);     //
         
-        //즐겨찾기를 가장 위에 정렬하는 함수 call
-        printf("*** sort by favorite ***\n");              
-        SortFavorite(pList);
-        PrintList(pList);    
     }
-    // 인덱스 다시 넘버링
-    printf("*** renumbering ***\n");              
-    Renumbering(pList);
+
     // 현재의 리스트를 print하고
     PrintList(pList);    
-    printf("OK\n");
+    //printf("OK\n");
     
     return 0;
 
+}
+extern int SortList(stList* pList) {
+    SortPhonebook(pList);        
+    SortFavorite(pList);
+    // 인덱스 다시 넘버링
+    //printf("*** renumbering ***\n");              
+    Renumbering(pList);
+    return 0;
 }
 
 int SortPhonebook(stList* pList) {
@@ -73,7 +77,7 @@ int SortPhonebook(stList* pList) {
                
             if(cur==pList->pHead) {  // 바로 이전 노드가 head일 때는 tmp의 이전노드가 NULL
                 //printf("1111\n");  
-                if (strcmp(cur->stData.name, cur->pNext->stData.name)==1) {  // 자리를 스위치     
+                if (strcmp(cur->name, cur->pNext->name)==1) {  // 자리를 스위치     
                   
                     tmp2 = cur_next->pNext; //tmp2는 cur의 다음다음 노드를 의미함.
                                             // cur_next와 cur의 위치를 바꿈
@@ -91,7 +95,7 @@ int SortPhonebook(stList* pList) {
                 }                 
             } else if (cur_next==pList->pTail) {
                 //printf("3333\n");
-                if (strcmp(cur->stData.name, cur_next->stData.name)==1) {  // 자리를 스위치        
+                if (strcmp(cur->name, cur_next->name)==1) {  // 자리를 스위치        
 
                     tmp1 = cur->pPrev;    //tmp는 cur의 이전노드를 의미함
                                           // cur_next와 cur의 위치를 바꿈
@@ -109,7 +113,7 @@ int SortPhonebook(stList* pList) {
                 }                    
             } else {
                 //printf("2222\n");
-                if (strcmp(cur->stData.name, cur_next->stData.name)==1) {  // 자리를 스위치   
+                if (strcmp(cur->name, cur_next->name)==1) {  // 자리를 스위치   
                     
                     tmp1 = cur->pPrev;    //tmp는 cur의 이전노드를 의미함
                     tmp2 = cur_next->pNext; //tmp2는 cur의 다음다음 노드를 의미함.
@@ -152,7 +156,7 @@ int SortFavorite(stList* pList) {
     for (count=(*pList).count_node ; count > 0; count--) {
         // tail에서 거꾸로 주소타고 올라가야 하는데, cur->pPrev를 유지하기 위해 tmp이용
         tmp = cur->pPrev;   
-        if(cur->stData.favorite==1) {
+        if(cur->favorite==1) {
            // cur의 앞과 뒤 노드를 연결 
             if(cur==pList->pTail) {
                 pList->pTail = tmp;                
@@ -169,4 +173,13 @@ int SortFavorite(stList* pList) {
         cur = tmp;   
     }
     return 0;
+}
+
+void Renumbering(stList* pList) {
+    int count=1;   //넘버링 시작은 1번부터
+    stNode* cur;
+    for (cur = pList->pHead; cur !=NULL ; cur=cur->pNext) {
+        cur->index = count;
+        count++;
+    } 
 }

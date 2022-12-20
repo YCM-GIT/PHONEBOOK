@@ -12,15 +12,15 @@ extern void InitializeList(stList* pList) {
     list->count_node = 0;
 }
 
-extern stNode* MakeNode(stMember data) {
+extern stNode* MakeNode(stNode* data) {
     stNode* node = malloc(sizeof(stNode));
-    node->stData = data;
+    node = data;
     node->pPrev = node->pNext = NULL;
     // id 부여하는 방법을 추가 고민
     return node;
 }  //노드를 만들기 위해 메모리 할당하고 초기화하기
 
-extern void AddtoTailNode(stList* pList, stMember data) {   // 노드를 만들면서 tail에 노드 추가
+extern void AddtoTailNode(stList* pList, stNode* data) {   // 노드를 tail에 노드 추가
     stNode* node = MakeNode(data);
     if(IsEmpty(pList)) {
         pList->pHead = pList->pTail = node;   
@@ -32,12 +32,16 @@ extern void AddtoTailNode(stList* pList, stMember data) {   // 노드를 만들�
     }
 }  //List의 뒤에 신규 노드 추가
 
-extern void AddtoHeadNode(stList* pList, stNode* node) { //기존에 있는 노드를 Head에 추가
-    // 리스트가 있는 상황에서 Head에 노드 추가
+extern void AddtoHeadNode(stList* pList, stNode* data) { //노드를 Head에 추가    
+    stNode* node = MakeNode(data);
+    if(IsEmpty(pList)) {
+        pList->pHead = pList->pTail = node;   
+    } else {       
         node->pNext = pList->pHead;
         pList->pHead->pPrev = node; 
         pList->pHead = node;
         node->pPrev = NULL;    
+    }
 }  
 extern void DeleteNode(stList* pList, int index) {
     stNode* cur;
@@ -46,7 +50,7 @@ extern void DeleteNode(stList* pList, int index) {
     } else {
         cur = pList->pHead;
         while(cur->pNext !=NULL) {
-            if (index == cur->stData.index) {   // 같은id를 가진 노드를 제거
+            if (index == cur->index) {   // 같은id를 가진 노드를 제거
                 cur->pPrev->pNext = cur->pNext;
                 cur->pNext->pPrev = cur->pPrev;
                 free(cur);   // 메모리 할당 해제
@@ -60,13 +64,12 @@ extern void DeleteNode(stList* pList, int index) {
 extern void PrintList(stList* pList) {
     stNode* cur;
     for (cur = pList->pHead; cur !=NULL ; cur=cur->pNext) {
-        printf("%5d ", cur->stData.id);
-        printf("%3d ",cur->stData.index);
-        printf("%30s ",cur->stData.name);
-        printf("%20s ",cur->stData.number);
-        printf("%20s ",cur->stData.group);
-        printf("%3d", cur->stData.search_hit);
-        printf("%3d", cur->stData.favorite);
+        printf("%5d ", cur->id);
+        printf("%3d ",cur->index);
+        printf("%30s ",cur->name);
+        printf("%20s ",cur->number);
+        printf("%20s ",cur->group);
+        printf("%3d", cur->favorite);
         printf("\n");
     }
     printf("\n");
@@ -84,13 +87,4 @@ extern void CountNode(stList *pList) {
     } 
     (*pList).count_node = count;  
 //    printf("%d\n",count);
-}
-
-extern void Renumbering(stList* pList) {
-    int count=1;   //넘버링 시작은 1번부터
-    stNode* cur;
-    for (cur = pList->pHead; cur !=NULL ; cur=cur->pNext) {
-        cur->stData.index = count;
-        count++;
-    } 
 }
