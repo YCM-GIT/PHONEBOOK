@@ -59,7 +59,7 @@ extern void DeleteNode(stList* pList, int index) {
             cur = cur->pNext;
         }
     }
-}  // id를 받아서 같은 id를 가진 노드 삭제 하기 
+}  // index를 받아서 같은 index를 가진 노드 삭제 하기 
 
 extern void PrintList(stList* pList) {
     stNode* cur;

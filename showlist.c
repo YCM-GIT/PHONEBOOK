@@ -5,34 +5,57 @@
 #include "double_linked_list.h"
 #include "phonebook.h"
 
-extern int ShowList(stList* pList);
+extern stNode* ShowList(stList* pList);
 extern int SortList(stList* pList);
 int SortPhonebook(stList* pList);
 int SortFavorite(stList* pList);
 void Renumbering(stList* pList);
 
 
-extern int ShowList(stList* pList) {
+extern stNode* ShowList(stList* pList) {
     // 변수 선언
-
-    if(IsEmpty(pList)==1) {   // list가 NULL 이면 에러값(-1) 리턴
-        //printf("This list is empty.");
-        return -1;
+    stNode* selected_node, *cur;
+    int i, user_choice=0, limit_ask=3; 
+    if(IsEmpty(pList)==1) {   // list가 NULL 이면 NULL 리턴
+        printf("This list is empty.");
+        return NULL;  
     }     
+    CountNode(pList);
     if (pList->sort_needs==1) {  //sort_needs=1 정렬이 필요하면 정렬시작        
 
         //정렬기준에 따른 정렬하는 함수 콜
         //printf("*** sort by name ***\n");
         SortList(pList);    // sort_order를 통해 정렬 기준을 바꿀 수 있어야 함. 지금은 디폴트 name 만 실행
-        //PrintList(pList);     //
-        
+        //PrintList(pList);     //        
     }
-
     // 현재의 리스트를 print하고
     PrintList(pList);    
-    //printf("OK\n");
     
-    return 0;
+    // 사용자가 index를 선택하도록 하는 기능 추가
+    while(limit_ask > 0) {
+        printf("\nWhich number would you like to select? : ");
+        scanf("%d",&user_choice);
+        if(user_choice <= pList->count_node && user_choice > 0) {
+            break;
+        } else {
+            printf("\nwrong number!\n");
+            limit_ask--;
+        }        
+    }
+    if (limit_ask <= 0) {
+        return NULL; // 사용자가 index 선택을 2번 잘못했을 경우 NULL을 리턴
+    }
+    // 사용자가 선택한 index에 해당하는 노드의 주소값을 찾아서 리턴값 설정
+    cur = pList->pHead;    
+    for (i=1; i <= pList->count_node; i++) {        
+        if(cur->index == user_choice) {
+            selected_node = cur;
+            break;
+        }
+        cur=cur->pNext;
+    }    
+    //printf("\nselected node is %s\n", selected_node->name);
+    return selected_node;          
 
 }
 extern int SortList(stList* pList) {
@@ -47,6 +70,7 @@ extern int SortList(stList* pList) {
 int SortPhonebook(stList* pList) {
 // 버블정렬
     stNode* cur, *cur_next, *tmp1, *tmp2;    
+    char *cur_sort, *cur_next_sort;
     int i,j;
     bool switching_position=false;
         
@@ -74,11 +98,23 @@ int SortPhonebook(stList* pList) {
     for (i=0 ; i < (*pList).count_node + 1 ; i++) {    //버블 정렬 : 이전노드tmp와 현재노드cur를 비교하여 스위치or그대로
         cur = pList->pHead;
         for (j=1 ; j < (*pList).count_node - i ; j++) { 
-            cur_next = cur->pNext;     
+            cur_next = cur->pNext; 
+
+            switch (pList->sort_order) {
+                case 1:     cur_sort = cur->number;
+                            cur_next_sort = cur->pNext->number;
+                            break;
+                case 2:     cur_sort = cur->group;
+                            cur_next_sort = cur->pNext->group;
+                            break;
+                default:    cur_sort = cur->name;
+                            cur_next_sort = cur->pNext->name;
+                            break;
+            }
                
             if(cur==pList->pHead) {  // 바로 이전 노드가 head일 때는 tmp의 이전노드가 NULL
                 //printf("1111\n");  
-                if (strcmp(cur->name, cur->pNext->name)==1) {  // 자리를 스위치     
+                if (strcmp(cur_sort, cur_next_sort)==1) {  // 자리를 스위치     
                   
                     tmp2 = cur_next->pNext; //tmp2는 cur의 다음다음 노드를 의미함.
                                             // cur_next와 cur의 위치를 바꿈
@@ -96,7 +132,7 @@ int SortPhonebook(stList* pList) {
                 }                 
             } else if (cur_next==pList->pTail) {
                 //printf("3333\n");
-                if (strcmp(cur->name, cur_next->name)==1) {  // 자리를 스위치        
+                if (strcmp(cur_sort, cur_next_sort)==1) {  // 자리를 스위치        
 
                     tmp1 = cur->pPrev;    //tmp는 cur의 이전노드를 의미함
                                           // cur_next와 cur의 위치를 바꿈
@@ -114,7 +150,7 @@ int SortPhonebook(stList* pList) {
                 }                    
             } else {
                 //printf("2222\n");
-                if (strcmp(cur->name, cur_next->name)==1) {  // 자리를 스위치   
+                if (strcmp(cur_sort, cur_next_sort)==1) {  // 자리를 스위치   
                     
                     tmp1 = cur->pPrev;    //tmp는 cur의 이전노드를 의미함
                     tmp2 = cur_next->pNext; //tmp2는 cur의 다음다음 노드를 의미함.

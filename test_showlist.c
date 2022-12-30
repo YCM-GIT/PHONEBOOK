@@ -5,10 +5,9 @@
 #include "double_linked_list.h"
 #include "phonebook.h"
 
-extern int ShowList(stList* pList);
-
 // 내 파일의 function을 test 하기 위한 main 함수 나중에는 test파일로 이동
 int main(void) {
+    stNode* selected_node;
     stList list = {0};   
     stNode member1 = {10001, (int)1, "KIM CheolMin", "010-5324-2342", "TEAM", 0, 0};
     stNode member2 = {10002, (int)2, "NAM HyeMin", "010-3333-2222", "SECURITY", 0, 1};
@@ -36,12 +35,17 @@ int main(void) {
     AddtoTailNode(&list, &member7);
     AddtoTailNode(&list, &member8);
 
-    PrintList(&list);
-
+    //PrintList(&list);
+    
 // 5. 전체 리스트를 이름 알파벳 순서로 정렬하여 보여준다    
 // 8. 즐겨찾기 등록한 사람들은 가장 위로 따로 보여준다.
-    ShowList(&list);   
+    selected_node = ShowList(&list);   
        
+    printf("\n(RET) selected node is %s\n", selected_node->name);
 // 서브메뉴 콜은 메인 메뉴에서 실행 필요
+
+    DeleteNode(&list, 5);    // index가 5번인 노드를 삭제
+    printf("\n\n");
+    PrintList(&list);
     
 }
