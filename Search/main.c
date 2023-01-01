@@ -25,12 +25,14 @@ int main(int argc, char *argv[]){
         stData = dataHead;
     
         searchedNode = searchDisplay(dataHead);
-
+        
+        printf("%p\n\n",searchedNode);
+        
         if(searchedNode != NULL){
                 printf("Searched data\n");
                 printf("Index\tID\tName\tNumber\t\tGroup\n");
-                printf("%d\t%d\t%s\t%s\t%s",searchedNode->index,searchedNode->id,searchedNode->name,searchedNode->number,searchedNode->group);
-                printf("\t->  matched with...%d ",searchedNode->matchedValue);
+                printf("%d\t%d\t%s\t%s\t%s ",searchedNode->index,searchedNode->id,searchedNode->name,searchedNode->number,searchedNode->group);
+                printf("\t-> matched with...");
                 matchedWith = " ";
                 switch (searchedNode->matchedValue)
                 {

@@ -1,6 +1,6 @@
 #include "searchDisplay.h"
 
-node* searchDisplay(node* data){
+extern node* searchDisplay(node* data){
     
     char searchingValue[256];
     
@@ -20,14 +20,14 @@ node* searchDisplay(node* data){
     cList = sList;
 
     if(cList != NULL){
-        printf("\nID\tIndex\tName\tNumber\t\tGroup\n");
+        printf("\nIndex\tID\tName\tNumber\t\tGroup\n");
     }
     else{
         printf("\nNo Mached Value\n");
     }
     while(cList != NULL){
         node* tmp = cList->node;
-        printf("%d\t%d\t%s\t%s\t%s\t%d\n",tmp->id,tmp->index,tmp->name,tmp->number,tmp->group,cList->matchedWith);
+        printf("%d\t%d\t%s\t%s\t%s\t%d\n",tmp->index,tmp->id,tmp->name,tmp->number,tmp->group,cList->matchedWith);
         cList = cList->NextNode;
     }
 
@@ -38,9 +38,10 @@ node* searchDisplay(node* data){
         scanf("%s",selectedIndex);
         while(cList != NULL){
             if(atoi(selectedIndex) == (cList->node)->index){
-                printf("Searched Success\n");
+                //printf("Searched Success\n");
                 selectedNode = (cList->node);
-                printf("matched with %d \n",selectedNode->matchedValue);
+                selectedNode->matchedValue = cList->matchedWith;
+                //printf("matched with %d \n",selectedNode->matchedValue);
                 break;
             }
             cList = cList->NextNode;
@@ -51,8 +52,8 @@ node* searchDisplay(node* data){
     }
 
     if(selectedNode != NULL){
-        printf("%d\t%d\t%s\t%s\t%s\t%d\n",selectedNode->id,selectedNode->index,selectedNode->name,selectedNode->number,selectedNode->group,cList->matchedWith);
-        printf("%p\n",selectedNode);
+//        printf("%d\t%d\t%s\t%s\t%s\t%d\n",selectedNode->index,selectedNode->id,selectedNode->name,selectedNode->number,selectedNode->group,cList->matchedWith);
+        printf("%p\n",*selectedNode);
     }
     
     return selectedNode;

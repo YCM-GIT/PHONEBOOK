@@ -32,8 +32,9 @@ typedef struct SearchedList
 node* getData(char*);
 node* getNode(char*);
 
+/*
 node* searchDisplay(node*);
 searchedList* SearchingValue(node*, char*);
 int stringFind(char*, char*);
-
+*/
 #endif

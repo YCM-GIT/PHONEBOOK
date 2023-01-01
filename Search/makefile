@@ -22,6 +22,6 @@
 #searchDisplay.o: searchDisplay.c
 #	gcc -c searchDisplay.c
 
-all: node.o main.o 
-	gcc -o main node.o main.o
+all: node.o main.o searchDisplay.o
+	gcc -o main node.o main.o searchDisplay.o
 	./main

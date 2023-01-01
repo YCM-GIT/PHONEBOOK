@@ -74,7 +74,7 @@ node* getData(char* filename){
     }
     return Head;
 }
-
+/*
 node* searchDisplay(node* data){
     
     char searchingValue[256];
@@ -118,7 +118,7 @@ node* searchDisplay(node* data){
                 //printf("Searched Success\n");
                 selectedNode = (cList->node);
                 selectedNode->matchedValue = cList->matchedWith;
-                printf("Matched Value %d \n",selectedNode->matchedValue);
+                //printf("Matched Value %d \n",selectedNode->matchedValue);
                 break;
             }
             cList = cList->NextNode;
@@ -225,3 +225,4 @@ int stringFind(char* a, char* b){
     }
     return ok ? i-1 : -1;
 }
+*/
