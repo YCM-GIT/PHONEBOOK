@@ -24,11 +24,11 @@ int main(int argc, char *argv[]){
     } // 별도로 argument가 있으면 argument 값에 해당되는 파일의 데이터를 읽어온다.
     
     //stNode* searchedNode = (stNode*) malloc(sizeof(stNode));
-    stNode* searchedNode;
+    stNode* searchedNode = NULL;
     getData(&list, fileName); // 파일명을 전달하면 파일의 값을 읽어 데이터를 stNode로 만들고 stList로 연결한다.
 
     while(1){
-        
+        system("clear");
         printf("\n=======================================\n");
         printf("              [Phone Book]             \n");
         printf("=======================================\n\n");
@@ -37,11 +37,13 @@ int main(int argc, char *argv[]){
         
         searchedNode = searchDisplay(&list); //현재 데이터 리스트를 전달하면 찾고자 하는 데이터의 stNode값을 리턴한다.
            
-        if(&searchedNode != NULL){
-                printf("Searched data...\n");
-                printf("Index\t ID\t\t   Name\t\t\t   Number\t\t     Group\n");
-                printf("%3d\t%5d\t%20s\t%20s\t%20s\t ",searchedNode->index,searchedNode->id,searchedNode->name,searchedNode->number,searchedNode->group);
-                printf("\t-> matched with...");
+        if(searchedNode != NULL){
+                printf("\nSearched data...\n");
+                printf("----------------------------------------------\n");
+                printf("Index\t ID\t\t  Name\t\t    Number\t\t   Group\n");
+                printf("%3d\t%5d%20s%20s%20s\n",searchedNode->index,searchedNode->id,searchedNode->name,searchedNode->number,searchedNode->group);
+                printf("----------------------------------------------\n");
+                printf("Matched with ");
                 matchedWith = " ";
                 switch (searchedNode->matchedValue)
                 {
@@ -64,7 +66,7 @@ int main(int argc, char *argv[]){
                 default:
                     break;
                 }
-                printf("%s\n\n",matchedWith);
+                printf("%s\n",matchedWith);
                 break;
         } // 찾는 값과 stNode값에서 어떤 필드에서 찾았는지 표시해 준다.
         else{

@@ -88,14 +88,14 @@ extern stNode* searchDisplay(stList* datalist){
     cList = sList; // 검색 결과를 탐색하기 위해 현재 리스트에 검색 결과 리스트의 Head 값으로 설정
 
     if(cList != NULL){
-        printf("\nIndex\t ID\t\t   Name\t\t\t   Number\t\t     Group\n");
+        printf("Index\t ID\t\t  Name\t\t   Number\t\t    Group\n");
     }
     else{
         printf("\nNo Mached Value\n");
     }
     while(cList != NULL){
         stNode* tmp = cList->node;
-        printf("%3d\t%5d\t%20s\t%20s\t%20s\t%3d\n",tmp->index,tmp->id,tmp->name,tmp->number,tmp->group,cList->matchedWith);
+        printf("%3d\t%5d%20s%20s%20s %3d\n",tmp->index,tmp->id,tmp->name,tmp->number,tmp->group,cList->matchedWith);
         cList = cList->NextNode;
     } // 검색된 결과 값들을 표시
 
@@ -112,7 +112,7 @@ extern stNode* searchDisplay(stList* datalist){
         else{
             while(cList != NULL){
                 if(selectedIndex == (cList->node)->index){
-                    printf("Searched Success\n\n");
+                    //printf("Searched Success\n\n");
                     selectedNode = (cList->node); // 입력 값이 검색 결과 중 index 값과 매칭되면 최종 검색 결과 stNode에 주소값 저장
                     selectedNode->matchedValue = cList->matchedWith; // 어떤 필드값에서 매칭이 되었는지 stNode의 매칭된 필드 값을 저장
                     break;
