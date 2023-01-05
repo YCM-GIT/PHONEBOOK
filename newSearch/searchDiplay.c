@@ -69,7 +69,8 @@ extern stNode* searchDisplay(stList* datalist){
     char searchingValue[256]; // 검색할 값을 저장할 변수
     
     printf("\n\n               Searching               \n\n");
-    printf("Input any values to search....");
+    printf("Input any values to search");
+    printf("\n(If you want to come back Main Menu, Input <!q>)....");
     scanf("%s",searchingValue); // 검색할 값을 입력 받는다.
 
     stSearchedList* sList = NULL; // 검색 결과 stNode를 연결한 리스트의 Head 값 초기화
@@ -77,6 +78,11 @@ extern stNode* searchDisplay(stList* datalist){
     stNode* selectedNode = NULL; // 최종 선택된 stNode 값 초기화
     //stNode* selectedNode = (stNode*) malloc(sizeof(stNode));
     int selectedIndex; // 어떤 필드값과 매칭되었는지를 저장하는 변수
+
+    if(strcmp(searchingValue,"!q") == 0){
+        selectedNode = NULL;
+        return selectedNode;
+    }
 
     sList = SearchingValue(0, datalist, searchingValue); //datalist 중 검색값과 매칭되는 stNode들의 리스트를 리턴 받음
     cList = sList; // 검색 결과를 탐색하기 위해 현재 리스트에 검색 결과 리스트의 Head 값으로 설정
@@ -97,18 +103,26 @@ extern stNode* searchDisplay(stList* datalist){
 
     if(cList != NULL){
         printf("\nSelect index that you searched...."); // 검색 결과 리스트 중 1개의 index값을 입력 받음
+        printf("\n(If you want to come back Main Menu, Input '0')....");
         scanf("%d",&selectedIndex);
-        while(cList != NULL){
-            if(selectedIndex == (cList->node)->index){
-                printf("Searched Success\n\n");
-                selectedNode = (cList->node); // 입력 값이 검색 결과 중 index 값과 매칭되면 최종 검색 결과 stNode에 주소값 저장
-                selectedNode->matchedValue = cList->matchedWith; // 어떤 필드값에서 매칭이 되었는지 stNode의 매칭된 필드 값을 저장
-                break;
-            }
-            cList = cList->NextNode;
+        if(selectedIndex == 0){
+            selectedNode = NULL;
+            return selectedNode;
         }
+        else{
+            while(cList != NULL){
+                if(selectedIndex == (cList->node)->index){
+                    printf("Searched Success\n\n");
+                    selectedNode = (cList->node); // 입력 값이 검색 결과 중 index 값과 매칭되면 최종 검색 결과 stNode에 주소값 저장
+                    selectedNode->matchedValue = cList->matchedWith; // 어떤 필드값에서 매칭이 되었는지 stNode의 매칭된 필드 값을 저장
+                    break;
+                }
+                cList = cList->NextNode;
+            }    
+        }        
     }
     else{
+        selectedNode = NULL;
         printf("Searched Fail\n\n"); // 입력 값이 검색 결과 중 index값과 매칭이 안될 시 
     }
 
