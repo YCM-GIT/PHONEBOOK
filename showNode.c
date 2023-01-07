@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include <time.h>
+#include <unistd.h>
 #include "double_linked_list.h"
 #include "phonebook.h"
 
@@ -15,17 +16,17 @@
 #define ANSI_COLOR_RESET    "\x1b[0m"
 
 
-static void subMenu(stList* pList, int index);
-static void EditMenu(stList* pList, int index);
-static void EditName(stList* pList, int index);
-static void EditNumber(stList* pList, int index);
-static void EditGroup(stList* pList, int index);
-static void EditFavorate(stList* pList, int index);
-static void StartCalling(stList* pList, int index);
+static void subMenu(stList* pList);
+static void EditMenu(stList* pList);
+static void EditName(stList* pList);
+static void EditNumber(stList* pList);
+static void EditGroup(stList* pList);
+static void EditFavorate(stList* pList);
+static void StartCalling(stList* pList);
 static void MainFunction();
-static int PrintShowNode(stList* pList, int index);
+static int PrintShowNode(stList* pList);
 
-extern int ShowNode(stList* pList, int index) {
+extern int ShowNode(stList* pList) {
 
     stNode* cur;
     system("clear");
@@ -37,7 +38,7 @@ extern int ShowNode(stList* pList, int index) {
     else {
         cur = pList->pHead;
         while (cur->pNext != NULL) {
-            if (index == cur->index) {
+             {
                 printf("%5d ", cur->id);
                 printf("%3d ", cur->index);
                 printf("%30s ", cur->name);
@@ -46,7 +47,7 @@ extern int ShowNode(stList* pList, int index) {
                 printf("%3d", cur->favorite);
                 printf("\n");
 
-                subMenu(pList, index);
+                subMenu(pList);
 
                 break;
             }
@@ -57,9 +58,11 @@ extern int ShowNode(stList* pList, int index) {
 }
 
 
-static void subMenu(stList* pList, int index) {
+static void subMenu(stList* pList) {
     
-    int i=0;    
+    int i=0;
+    stNode* Node;
+    int index = Node->index;
 
     while (i< 4) {
         
@@ -81,12 +84,12 @@ static void subMenu(stList* pList, int index) {
         }
 
        else if (i == 2) {
-           EditMenu(pList, index);
+           EditMenu(pList);
            SortList(pList);
        }
 
        else if (i == 3) {
-            StartCalling(pList, index);
+            StartCalling(pList);
        }      
 
       else {
@@ -99,7 +102,7 @@ static void subMenu(stList* pList, int index) {
 }
 
 
-static void EditMenu(stList* pList, int index) {
+static void EditMenu(stList* pList) {
     int num = 0;
     int j = 0;
     stNode* cur;
@@ -117,7 +120,7 @@ static void EditMenu(stList* pList, int index) {
 
             cur = pList->pHead;
             while (cur->pNext != NULL) {
-                if (index == cur->index) {
+                {
                     printf("%5d ", cur->id);
                     printf("%3d ", cur->index);
                     printf("%30s ", cur->name);
@@ -145,19 +148,19 @@ static void EditMenu(stList* pList, int index) {
             switch (num)
             {
             case 1:
-                EditName(pList, index);
+                EditName(pList);
 
                 break;
             case 2:
-                EditNumber(pList, index);
+                EditNumber(pList);
 
                 break;
             case 3:
-                EditGroup(pList, index);
+                EditGroup(pList);
 
                 break;
             case 4:
-                EditFavorate(pList, index);
+                EditFavorate(pList);
 
                 break;
             default:
@@ -169,14 +172,14 @@ static void EditMenu(stList* pList, int index) {
 
     }
     system("clear");
-    PrintShowNode(pList, index);
-    subMenu(pList, index);
+    PrintShowNode(pList);
+    subMenu(pList);
     return;
 
 }
 
 
-static void EditName(stList* pList, int index) {
+static void EditName(stList* pList) {
     stNode* cur; 
 
     if (IsEmpty(pList)) {
@@ -185,7 +188,7 @@ static void EditName(stList* pList, int index) {
     else {        
         cur = pList->pHead;        
         while (cur->pNext != NULL) { 
-            if (index == cur->index) {  
+            {  
                 printf("New name: ");
                 scanf("%s", cur->name);                        
                              
@@ -198,7 +201,7 @@ static void EditName(stList* pList, int index) {
     system("clear");
 }
 
-static void EditNumber(stList* pList, int index) {
+static void EditNumber(stList* pList) {
     stNode* cur;
 
     if (IsEmpty(pList)) {
@@ -207,7 +210,7 @@ static void EditNumber(stList* pList, int index) {
     else {
         cur = pList->pHead;
         while (cur->pNext != NULL) {
-            if (index == cur->index) {
+             {
                 printf("New number: ");
                 scanf("%s", cur->number);
                 printf("%s\n", cur->number);
@@ -221,7 +224,7 @@ static void EditNumber(stList* pList, int index) {
 }
 
 
-static void EditGroup(stList* pList, int index) {
+static void EditGroup(stList* pList) {
     stNode* cur;
 
     if (IsEmpty(pList)) {
@@ -230,7 +233,7 @@ static void EditGroup(stList* pList, int index) {
     else {
         cur = pList->pHead;
         while (cur->pNext != NULL) {
-            if (index == cur->index) {
+             {
                 printf("New Group: ");
                 scanf("%s", cur->group);
                 printf("%s\n", cur->group);
@@ -242,7 +245,7 @@ static void EditGroup(stList* pList, int index) {
     system("clear");
 }
 
-static void EditFavorate(stList* pList, int index) {
+static void EditFavorate(stList* pList) {
     stNode* cur;
     int scalar = 0;
     bool b = false;   
@@ -253,7 +256,7 @@ static void EditFavorate(stList* pList, int index) {
     else {
         cur = pList->pHead;
         while (cur->pNext != NULL) {
-            if (index == cur->index) {
+            {
                 printf("New Favorate: ");
                 scanf("%d", &scalar);
                 b=(bool)scalar;
@@ -269,7 +272,7 @@ static void EditFavorate(stList* pList, int index) {
 
 }
 
-static void StartCalling(stList* pList, int index) {
+static void StartCalling(stList* pList) {
     int num;
     int i;
     
@@ -277,7 +280,7 @@ static void StartCalling(stList* pList, int index) {
     while (1) 
     {
         system("clear");
-        PrintShowNode(pList, index);
+        PrintShowNode(pList);
        
         for (i = 0;i < 10; i++) {
             printf(ANSI_COLOR_RED "*Calling*" ANSI_COLOR_RESET "");
@@ -294,7 +297,7 @@ static void StartCalling(stList* pList, int index) {
 
         if (num == 1) { 
             system("clear");
-            PrintShowNode(pList, index);
+            PrintShowNode(pList);
             break;
         }
 
@@ -302,7 +305,7 @@ static void StartCalling(stList* pList, int index) {
  }
  
 
-static int PrintShowNode(stList* pList, int index) {
+static int PrintShowNode(stList* pList) {
 
     stNode* cur;
     system("clear");
@@ -314,14 +317,15 @@ static int PrintShowNode(stList* pList, int index) {
     else {
         cur = pList->pHead;
         while (cur->pNext != NULL) {
-            if (index == cur->index) {
+            {
                 printf("%5d ", cur->id);
                 printf("%3d ", cur->index);
                 printf("%30s ", cur->name);
                 printf("%20s ", cur->number);
                 printf("%20s ", cur->group);
                 printf("%3d", cur->favorite);
-                printf("\n");                
+                printf("\n");   
+                sleep(1);
 
                 break;
             }

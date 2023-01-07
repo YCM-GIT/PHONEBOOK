@@ -6,9 +6,6 @@
 #include "double_linked_list.h"
 #include "phonebook.h"
 
-
-
-
 // 내 파일의 function을 test 하기 위한 main 함수 나중에는 test파일로 이동
 int main(void) {
     stList list = { 0 };
@@ -39,8 +36,14 @@ int main(void) {
     printf("****** show Node *****\n");
 
     ShowList(&list);
-    ShowNode(&list, 3);
+
+    
+
+    ShowNode(&list);
+
     //ShowList(&list);
 
     return 0;
 }
+
+
