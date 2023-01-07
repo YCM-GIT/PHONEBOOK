@@ -23,7 +23,6 @@ static void EditNumber(stList* pList);
 static void EditGroup(stList* pList);
 static void EditFavorate(stList* pList);
 static void StartCalling(stList* pList);
-static void MainFunction();
 static int PrintShowNode(stList* pList);
 
 extern int ShowNode(stList* pList) {
@@ -93,11 +92,12 @@ static void subMenu(stList* pList) {
        }      
 
       else {
-            MainFunction();
+            return;
            
         }
        
     }
+    return;
     
 }
 
@@ -282,13 +282,15 @@ static void StartCalling(stList* pList) {
         system("clear");
         PrintShowNode(pList);
        
-        for (i = 0;i < 10; i++) {
+        for (i = 0;i < 5; i++) {
             printf(ANSI_COLOR_RED "*Calling*" ANSI_COLOR_RESET "");
             printf(ANSI_COLOR_GREEN "*Calling*" ANSI_COLOR_RESET "");
             printf(ANSI_COLOR_YELLOW "*Calling*" ANSI_COLOR_RESET "");
             printf(ANSI_COLOR_BLUE "*Calling*" ANSI_COLOR_RESET "");
             printf(ANSI_COLOR_MAGENTA "*Calling*" ANSI_COLOR_RESET "");
             printf(ANSI_COLOR_CYAN "*Calling*" ANSI_COLOR_RESET "\n");
+
+            sleep(1);
 
         };
 
@@ -337,6 +339,3 @@ static int PrintShowNode(stList* pList) {
 
 
 
-static void MainFunction() {
-    printf("Main Function \n");
-}
