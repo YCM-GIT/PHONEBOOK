@@ -44,7 +44,7 @@ typedef struct __List {
 
 stList list_variables;
 
-// 주석 처리 필요
+// 다른 사람들이 작성한 c 파일과 함께 컴파일할 때는 아래 중 해당 함수를 주석처리해야 함.
 void AddNewNodeSample(stList* address_of_list_variables);     // 3개의 샘플 노드를 추가한다. 샘플파일의 10001~10003번 데이터와 같음.
 stNode* Search(stList* address_of_list_variables);
 void ShowNode(stNode* address_of_Node);
@@ -134,7 +134,7 @@ void AddNewNodeSample(stList* address_of_list_variables){                       
 	address_of_list_variables->pHead->favorite = 0;
 	address_of_list_variables->pHead->pPrev = NULL;
 	address_of_list_variables->pHead->pNext = NULL;
-	//list_variables.pHead->pPrev = NULL;  ?? 이렇게 직접적으로 주고 받으면 단점?
+	//list_variables.pHead->pPrev = NULL; 
 	//list_variables.pHead->pNext = NULL;
 	
 	
@@ -178,7 +178,7 @@ void AddNewNodeSample(stList* address_of_list_variables){                       
 }
 
 
-// 주석 처리 필요
+// 다른 사람들이 작성한 c 파일과 함께 컴파일할 때는 아래 중 해당 함수를 주석처리해야 함.
 stNode* Search(stList* address_of_list_variables){                                                           // 테스트용.
     // return address_of_list_variables->pHead;
 	return address_of_list_variables->pHead;
@@ -196,7 +196,7 @@ void ShowNode(stNode* address_of_Node){                                    // �
     );
 }
 
-// showlist.c 와 함께 컴파일할 때는 아래를 주석처리해야 함.
+
 /* 
 stNode* ShowList(stList* address_of_list_variables){                                                        // 테스트용.
     return address_of_list_variables->pHead->pNext;
