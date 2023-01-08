@@ -8,6 +8,9 @@
 
 // 내 파일의 function을 test 하기 위한 main 함수 나중에는 test파일로 이동
 int main(void) {
+
+    
+
     stList list = { 0 };
     stNode member1 = { 10001, (int)1, "KIM CheolMin", "010-5324-2342", "TEAM", 0, 0 };
     stNode member2 = { 10002, (int)2, "NAM HyeMin", "010-3333-2222", "SECURITY", 0, 1 };
@@ -35,11 +38,17 @@ int main(void) {
 
     printf("****** show Node *****\n");
 
-    ShowList(&list);
+    //ShowList(&list);     
+    stNode* Node = ShowList(&list);
+    printf("\nstNode is %s\n", Node->name);
+    
+    ShowNode(Node, &list);
+   
 
     
 
-    ShowNode(&list);
+    //ShowNode(&list);
+    printf("main \n");
 
     //ShowList(&list);
 

@@ -16,51 +16,40 @@
 #define ANSI_COLOR_RESET    "\x1b[0m"
 
 
-static void subMenu(stList* pList);
-static void EditMenu(stList* pList);
-static void EditName(stList* pList);
-static void EditNumber(stList* pList);
-static void EditGroup(stList* pList);
-static void EditFavorate(stList* pList);
-static void StartCalling(stList* pList);
-static int PrintShowNode(stList* pList);
+static void subMenu(stNode* Node, stList* pList);
+static void EditMenu(stNode* Node, stList* pList);
+static void EditName(stNode* Node);
+static void EditNumber(stNode* Node);
+static void EditGroup(stNode* Node);
+static void EditFavorate(stNode* Node);
+static void StartCalling(stNode* Node);
+static int PrintShowNode(stNode* Node);
 
-extern int ShowNode(stList* pList) {
+extern int ShowNode(stNode* Node, stList* pList) {
+    
+    
+    stNode* tmp_stNode;
 
-    stNode* cur;
-    system("clear");
+   system("clear");
 
-    if (IsEmpty(pList)) {
-        printf("There is no member.\n");
-        return -1;
-    }
-    else {
-        cur = pList->pHead;
-        while (cur->pNext != NULL) {
-             {
-                printf("%5d ", cur->id);
-                printf("%3d ", cur->index);
-                printf("%30s ", cur->name);
-                printf("%20s ", cur->number);
-                printf("%20s ", cur->group);
-                printf("%3d", cur->favorite);
-                printf("\n");
+    printf("%5d ", Node->id);
+    printf("%3d ", Node->index);
+    printf("%30s ", Node->name);
+    printf("%20s ", Node->number);
+    printf("%20s ", Node->group);
+    printf("%3d", Node->favorite);
+    printf("\n");
 
-                subMenu(pList);
+   subMenu(Node, pList);
 
-                break;
-            }
-            cur = cur->pNext;
-        }
-    }
+  
     return 0;
 }
 
 
-static void subMenu(stList* pList) {
+static void subMenu(stNode* Node, stList* pList) {
     
-    int i=0;
-    stNode* Node;
+    int i=0;   
     int index = Node->index;
 
     while (i< 4) {
@@ -83,16 +72,16 @@ static void subMenu(stList* pList) {
         }
 
        else if (i == 2) {
-           EditMenu(pList);
+           EditMenu(Node,pList);
            SortList(pList);
        }
 
        else if (i == 3) {
-            StartCalling(pList);
+            StartCalling(Node);
        }      
 
       else {
-            return;
+            break;
            
         }
        
@@ -102,38 +91,23 @@ static void subMenu(stList* pList) {
 }
 
 
-static void EditMenu(stList* pList) {
+static void EditMenu(stNode* Node, stList* pList) {
     int num = 0;
     int j = 0;
-    stNode* cur;
+   
 
     system("clear");
 
 
     while (j < 5) {
 
-        if (IsEmpty(pList)) {
-            printf("There is no member.\n");
-           
-        }
-        else {
-
-            cur = pList->pHead;
-            while (cur->pNext != NULL) {
-                {
-                    printf("%5d ", cur->id);
-                    printf("%3d ", cur->index);
-                    printf("%30s ", cur->name);
-                    printf("%20s ", cur->number);
-                    printf("%20s ", cur->group);
-                    printf("%3d", cur->favorite);
-                    printf("\n");
-
-                    break;
-                }
-                cur = cur->pNext;
-            }
-        }
+        printf("%5d ", Node->id);
+        printf("%3d ", Node->index);
+        printf("%30s ", Node->name);
+        printf("%20s ", Node->number);
+        printf("%20s ", Node->group);
+        printf("%3d", Node->favorite);
+        printf("\n");
 
         while (num < 5) {
             printf("\n");
@@ -148,19 +122,19 @@ static void EditMenu(stList* pList) {
             switch (num)
             {
             case 1:
-                EditName(pList);
+                EditName(Node);
 
                 break;
             case 2:
-                EditNumber(pList);
+                EditNumber(Node);
 
                 break;
             case 3:
-                EditGroup(pList);
+                EditGroup(Node);
 
                 break;
             case 4:
-                EditFavorate(pList);
+                EditFavorate(Node);
 
                 break;
             default:
@@ -172,115 +146,61 @@ static void EditMenu(stList* pList) {
 
     }
     system("clear");
-    PrintShowNode(pList);
-    subMenu(pList);
+    PrintShowNode(Node);
+    subMenu(Node, pList);
     return;
 
 }
 
 
-static void EditName(stList* pList) {
-    stNode* cur; 
+static void EditName(stNode *Node) {
 
-    if (IsEmpty(pList)) {
-        printf("There is no member.\n");
-    }
-    else {        
-        cur = pList->pHead;        
-        while (cur->pNext != NULL) { 
-            {  
-                printf("New name: ");
-                scanf("%s", cur->name);                        
-                             
-                break;
-            }
-            cur = cur->pNext;
-        }
-       
-    }
-    system("clear");
-}
+    printf("New name: ");
+    scanf("%s", Node->name);                        
 
-static void EditNumber(stList* pList) {
-    stNode* cur;
-
-    if (IsEmpty(pList)) {
-        printf("There is no member.\n");
-    }
-    else {
-        cur = pList->pHead;
-        while (cur->pNext != NULL) {
-             {
-                printf("New number: ");
-                scanf("%s", cur->number);
-                printf("%s\n", cur->number);
-                break;
-            }
-            cur = cur->pNext;
-        }
-
-    }
     system("clear");
 }
 
 
-static void EditGroup(stList* pList) {
-    stNode* cur;
+static void EditNumber(stNode* Node) {
 
-    if (IsEmpty(pList)) {
-        printf("There is no member.\n");
-    }
-    else {
-        cur = pList->pHead;
-        while (cur->pNext != NULL) {
-             {
-                printf("New Group: ");
-                scanf("%s", cur->group);
-                printf("%s\n", cur->group);
-                break;
-            }
-            cur = cur->pNext;
-        }
-    }
+    printf("New number: ");
+    scanf("%s", Node->number);    
+
     system("clear");
 }
 
-static void EditFavorate(stList* pList) {
-    stNode* cur;
+
+static void EditGroup(stNode* Node) {
+    
+    printf("New Group: ");
+    scanf("%s", Node->group);
+
+    system("clear");
+}
+
+static void EditFavorate(stNode* Node) {
+   
     int scalar = 0;
     bool b = false;   
+ 
+    printf("New Favorate: ");
+    scanf("%d", &scalar);
+    b=(bool)scalar;
+    Node->favorite = b;
 
-    if (IsEmpty(pList)) {
-        printf("There is no member.\n");
-    }
-    else {
-        cur = pList->pHead;
-        while (cur->pNext != NULL) {
-            {
-                printf("New Favorate: ");
-                scanf("%d", &scalar);
-                b=(bool)scalar;
-                cur->favorite = b;
-                printf("b: %d \n", b);
-                printf("Favorate: %d\n", cur->favorite);
-                break;
-            }
-            cur = cur->pNext;
-        }
-    }
     system("clear");
 
 }
 
-static void StartCalling(stList* pList) {
+static void StartCalling(stNode* Node) {
     int num;
-    int i;
-    
+    int i;    
 
     while (1) 
     {
         system("clear");
-        PrintShowNode(pList);
+        PrintShowNode(Node);
        
         for (i = 0;i < 5; i++) {
             printf(ANSI_COLOR_RED "*Calling*" ANSI_COLOR_RESET "");
@@ -299,7 +219,7 @@ static void StartCalling(stList* pList) {
 
         if (num == 1) { 
             system("clear");
-            PrintShowNode(pList);
+            PrintShowNode(Node);
             break;
         }
 
@@ -307,33 +227,20 @@ static void StartCalling(stList* pList) {
  }
  
 
-static int PrintShowNode(stList* pList) {
+static int PrintShowNode(stNode* Node) {
 
-    stNode* cur;
+   
     system("clear");
 
-    if (IsEmpty(pList)) {
-        printf("There is no member.\n");
-        return -1;
-    }
-    else {
-        cur = pList->pHead;
-        while (cur->pNext != NULL) {
-            {
-                printf("%5d ", cur->id);
-                printf("%3d ", cur->index);
-                printf("%30s ", cur->name);
-                printf("%20s ", cur->number);
-                printf("%20s ", cur->group);
-                printf("%3d", cur->favorite);
-                printf("\n");   
-                sleep(1);
+    printf("%5d ", Node->id);
+    printf("%3d ", Node->index);
+    printf("%30s ", Node->name);
+    printf("%20s ", Node->number);
+    printf("%20s ", Node->group);
+    printf("%3d", Node->favorite);
+    printf("\n");   
+    
 
-                break;
-            }
-            cur = cur->pNext;
-        }
-    }
     return 0;
 }
 
