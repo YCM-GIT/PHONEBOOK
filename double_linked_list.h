@@ -11,7 +11,7 @@ typedef struct __Node {
     char name[NAME_LENGTH];     // 영문 이름
     char number[NUMBER_LENGTH]; // 전화 번호
     char group[GROUP_LENGTH];
-    bool search_hit; // 해당 노드가 검색조건을 만족한다면 이 flag를 1로 설정해서 다음함수로 넘겨줌 메인메뉴로 돌아갈 때 0으로 초기화 필요
+    bool matchedValue; // search_hit → matchedValue (230108). 해당 노드가 검색조건을 만족한다면 이 flag를 1로 설정해서 다음함수로 넘겨줌 메인메뉴로 돌아갈 때 0으로 초기화 필요
     bool favorite; // 즐겨찾기
     
     struct __Node* pPrev;
