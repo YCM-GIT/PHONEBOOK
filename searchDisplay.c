@@ -6,6 +6,7 @@
 #include "phonebook.h"
 
 /* csv 파일명을 입력 받아서 파일의 값들을 stNode로 만들고 stNode를 stList로 연결한다. */
+/*
 void getData(stList* pList, char* filename){
     FILE* fp;
     char buffer[256];
@@ -19,8 +20,11 @@ void getData(stList* pList, char* filename){
         AddtoTailNode(pList, newNode); // 생성된 stNode를 pList Tail에 연결한다.
     }
 }
+*/ // YCM 주석처리. main() 함수 안으로 옮겼음.
+
 
 /* 데이터 한줄을 입력 받아서 파싱을 하고 stNode의 각 필드 값에 저장하고 해당 stNode를 리턴한다.*/
+/*
 stNode* getNode(char* stringValue){
     int tmpCount = 0; // 파싱되는 순서대로 stNode의 각 필드에 저장하기 위해 파싱 순서를 저장하는 변수
     char* temp; // 파싱되는 문자 데이터 저장 변수
@@ -62,6 +66,12 @@ stNode* getNode(char* stringValue){
     }
     return newNode; // 파싱된 stNode 1개를 리턴한다.
 }
+*/ // YCM 주석처리. main() 함수 안으로 옮겼음.
+
+
+// searchDisplay 함수 내부에서 쓰이는 함수를 위에 선언. ?? 아래에 선언 및 정의해도 컴파일이 잘 되셨나요? (to YTY)
+stSearchedList* SearchingValue(int mode, stList* dataList, char* searchingValue);
+int stringFind(char* a, char* b); 
 
 /* 검색 화면으로 이동해서 검색한 1개의 stNode값을 리턴한다. */
 extern stNode* searchDisplay(stList* datalist){

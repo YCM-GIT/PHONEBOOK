@@ -1,4 +1,4 @@
-// 230108 현재: gcc main.c showlist.c double_linked_list.c newinsertlist.c -o main.exe
+// 230108 현재: gcc main.c showlist.c double_linked_list.c newinsertlist.c searchDisplay.c -o main.exe
 // 함수 추가 시, 각 함수의 "// 주석 처리 필요" 부분 주석 처리 필요.
 
 //main.c 대비 변경점
@@ -7,6 +7,7 @@
 // 3. 구조체 안에 문자열을 대입하기 위해, strcpy 함수 사용. 이를 위해 #include<string.h> 필요
 // 4. #include "double_linked_list.h", #include "phonebook.h" 추가.
 // 5. (230108) Search, ShowList, ShowGroup 함수에서 NULL값 리턴 시, main의 while문으로 복귀. (NULL값이 아니라면, ShowNode 함수 호출)
+// 6. stSearchedList 구조체 선언. (double_linked_list.h 안에)
 
 #include <stdio.h> 
 #include <stdlib.h>

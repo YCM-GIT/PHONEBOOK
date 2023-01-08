@@ -10,6 +10,6 @@ extern int SortList(stList* pList);  // CEB. 리스트를 정렬하는 함수 (�
 //extern stNode* ShowGroup(char* group_name, stList* pList); // JSY. (YCM이 추가함)
 
 extern void AddNewNode(stList* pList); // JIJ. (YCM이 추가함)
-//extern stNode* searchDisplay(stList* datalist); // YTY. (YCM이 추가함)
+extern stNode* searchDisplay(stList* datalist); // YTY. (YCM이 추가함)
 
 #endif 

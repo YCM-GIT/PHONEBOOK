@@ -26,6 +26,15 @@ typedef struct __List {
     int count_node;
 } stList;   // 리스트 구조체
 
+// YTY 구조체. github - TY 브랜치에서 이 부분만 복붙함.
+typedef struct __SearchedList
+{
+    struct __SearchedList* NextNode;
+    struct __SearchedList* PrevNode;
+    stNode* node;
+    int matchedWith;
+} stSearchedList;  // 검색된 리스트를 가지는 구조체
+
 // 함수 선언
 extern void InitializeList(stList* pList);              // 메모리 할당해서 리스트 만들기
 stNode* MakeNode(stNode* data);                //메모리 할당해서 노드 만들기
