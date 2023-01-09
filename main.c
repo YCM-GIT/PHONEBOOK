@@ -1,4 +1,5 @@
-// 230108 현재: gcc main.c showlist.c double_linked_list.c newinsertlist.c searchDisplay.c -o main.exe
+// 230109 현재: gcc main.c showlist.c double_linked_list.c newinsertlist.c searchDisplay.c showNode.c -o main.exe
+// 				※ Import_Export.c는 자체 main 함수 포함하고 있어서, 통합 빌드하지 않음.
 // 함수 추가 시, 각 함수의 "// 주석 처리 필요" 부분 주석 처리 필요.
 
 //main.c 대비 변경점
@@ -50,9 +51,9 @@ typedef struct __List {
 // 다른 사람들이 작성한 c 파일과 함께 컴파일할 때는 아래 중 해당 함수를 주석처리해야 함.
 void AddNewNodeSample(stList* address_of_list_variables);     // 3개의 샘플 노드를 추가한다. 샘플파일의 10001~10003번 데이터와 같음.
 stNode* Search(stList* address_of_list_variables); // YTY. searchDisplay.C
-void ShowNode(stNode* address_of_Node);	// YM.
+// void ShowNode(stNode* address_of_Node);	// YM.
 // stNode* ShowList(stList* address_of_list_variables);	// CEB.
-stNode* ShowGroup(char* group_name, stList* address_of_list_variables);	// JSY.
+// stNode* ShowGroup(char* group_name, stList* address_of_list_variables);	// JSY.
 void ImportExport();
 void ChangeOrder();
 void getData(stList* pList, char* filename);
@@ -107,7 +108,8 @@ void main(){                 // 샘플 파일에서 읽어올 것인지 물어�
 				continue;
 			}
 			else {
-				ShowNode(p_temp_node);
+				//ShowNode(p_temp_node);				
+				ShowNode(p_temp_node, &list_variables);
 			}
 
 			continue;
@@ -121,7 +123,8 @@ void main(){                 // 샘플 파일에서 읽어올 것인지 물어�
 				continue;
 			}
 			else {
-				ShowNode(p_temp_node);
+				//ShowNode(p_temp_node);
+				ShowNode(p_temp_node, &list_variables);
 			}
 			
 			continue;
@@ -133,19 +136,22 @@ void main(){                 // 샘플 파일에서 읽어올 것인지 물어�
 			printf("--------------------------\n");
 			printf("Type Group name correctly: ");
 			//scanf_s(%d, &command, sizeof(int));
-			char* group_name;
+			char group_name[GROUP_LENGTH];
 			scanf("%s", group_name);
+			printf("%s\n", group_name);
 			// 어느 그룹을 보여줄 것인지 묻고, 문자열을 ShowGroup에 넘겨주는 기능 완료.
 
-			//ShowNode(ShowGroup(group_name, &list_variables));	테스트용.
+			// ShowNode(ShowGroup(group_name, &list_variables), &list_variables);	// 테스트용.
 
 			// ShowGroup 함수를 호출 후, 1) 사용자가 노드를 선택하면 ShowNode 함수 호출. 2) 제대로 선택하지 않으면 (NULL을 리턴 받아서) 메인 메뉴로 돌아감.
+						
 			stNode* p_temp_node = ShowGroup(group_name, &list_variables);
 			if (p_temp_node == NULL){
 				continue;
 			}
 			else {
-				ShowNode(p_temp_node);
+				//ShowNode(p_temp_node);
+				ShowNode(p_temp_node, &list_variables);
 			}			
 			
 			continue;		
@@ -235,6 +241,7 @@ stNode* Search(stList* address_of_list_variables){                              
 }
 
 
+/*
 void ShowNode(stNode* address_of_Node){                                    // 테스트용.
     printf("%d      %d      %s      %s      %s      %d      %d\n", 
     address_of_Node->id, 
@@ -246,7 +253,7 @@ void ShowNode(stNode* address_of_Node){                                    // �
     address_of_Node->favorite 
     );
 }
-
+*/
 
 /* 
 stNode* ShowList(stList* address_of_list_variables){                                                        // 테스트용.
@@ -254,12 +261,14 @@ stNode* ShowList(stList* address_of_list_variables){                            
 }
 */
 
-
+/*
 stNode* ShowGroup(char* group_name, stList* address_of_list_variables){                                                        // 테스트용.
     return address_of_list_variables->pHead->pNext->pNext
 	
 	;
 }
+*/
+
 
 void ImportExport(){                                                       // 테스트용.
 	printf("ImportExport();\n");
