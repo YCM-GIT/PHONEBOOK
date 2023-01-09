@@ -16,8 +16,9 @@ extern stNode* ShowList(stList* pList) {
     // 변수 선언
     stNode* selected_node, *cur;
     int i, user_choice=0, limit_ask=3; 
+    char user_choice_char;
     if(IsEmpty(pList)==1) {   // list가 NULL 이면 NULL 리턴
-        printf("This list is empty.");
+        printf("This list is empty.\n");
         return NULL;  
     }     
     CountNode(pList);
@@ -33,8 +34,13 @@ extern stNode* ShowList(stList* pList) {
     
     // 사용자가 index를 선택하도록 하는 기능 추가
     while(limit_ask > 0) {
-        printf("\nWhich number would you like to select? : ");
-        scanf("%d",&user_choice);
+        printf("\nWhich number would you like to select? (to main menu : 'q') : ");
+        scanf("%c",&user_choice_char);
+        user_choice = (int)user_choice_char - 48;
+        if(user_choice_char=='q') {
+            // printf("quit\n");
+            return NULL;    // q를 입력받으면 NULL을 리턴함
+        }        
         if(user_choice <= pList->count_node && user_choice > 0) {
             break;
         } else {
@@ -42,6 +48,7 @@ extern stNode* ShowList(stList* pList) {
             limit_ask--;
         }        
     }
+    printf("\n");
     if (limit_ask <= 0) {
         return NULL; // 사용자가 index 선택을 2번 잘못했을 경우 NULL을 리턴
     }
@@ -80,20 +87,6 @@ int SortPhonebook(stList* pList) {
         printf("The number of nodes is not enough.\n");
         return -1;
     }
-    if ((*pList).count_node == 2 ) {
-        cur = pList->pHead;
-        cur_next = cur->pNext;
-        
-        pList->pHead = cur_next;
-        pList->pHead->pNext = cur;
-        pList->pHead->pPrev = NULL;
-
-        pList->pTail = cur;
-        pList->pTail->pPrev = cur_next;
-        pList->pTail->pNext = NULL;
-        
-        return 0;
-    }
 
     for (i=0 ; i < (*pList).count_node + 1 ; i++) {    //버블 정렬 : 이전노드tmp와 현재노드cur를 비교하여 스위치or그대로
         cur = pList->pHead;
@@ -107,24 +100,26 @@ int SortPhonebook(stList* pList) {
                 case 2:     cur_sort = cur->group;
                             cur_next_sort = cur->pNext->group;
                             break;
-                default:    cur_sort = cur->name;
+                default:    cur_sort = cur->name;     // 0은 name, 1은 전화번호, 2는 그룹, 3 이상은 name
                             cur_next_sort = cur->pNext->name;
                             break;
             }
                
             if(cur==pList->pHead) {  // 바로 이전 노드가 head일 때는 tmp의 이전노드가 NULL
                 //printf("1111\n");  
+
                 if (strcmp(cur_sort, cur_next_sort)==1) {  // 자리를 스위치     
                   
-                    tmp2 = cur_next->pNext; //tmp2는 cur의 다음다음 노드를 의미함.
+                    tmp2 = cur_next->pNext; //tmp2는 cur의 다음다음 노드를 의미함.  노드2개일때는 tmp2가 NULL
                                             // cur_next와 cur의 위치를 바꿈
                     cur->pNext = tmp2;  // cur의다음주소 기존 cur다음다음노드의 주소,
                     cur->pPrev = cur_next;    // cur의 이전주소는 기존 cur다음노드의 주소   
 
                     cur_next->pPrev = NULL;
                     cur_next->pNext = cur;
-
-                    tmp2->pPrev = cur;   // 기존cur다음다음노드의 이전주소는 cur
+                    if(cur_next->pNext!=NULL) {  // tmp2가 NULL이 아닐 경우에만 실행
+                        tmp2->pPrev = cur;   // 기존cur다음다음노드의 이전주소는 cur  
+                    }
                     pList->pHead = cur_next;
 
                     switching_position=true;                    
