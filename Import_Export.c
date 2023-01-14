@@ -15,16 +15,16 @@
 
 void print_screen();
 int select_sub();
-stList* Import();
+void Import();
+//stList* Import();
 void Export(stList* pList);
 int CSV_search(char *, char [10][1024]);
 
-int main()
+
+extern void Import_Export(stList* list)
 {
 	int mode;
 
-	//test code
-	stList* import_list;
 	stList* export_list;
 
 	print_screen();
@@ -32,18 +32,13 @@ int main()
 
 	if (mode == 1)
 	{
-		import_list = Import();
-		PrintList(import_list);
+		Import(list);
 	}	
 	else if (mode == 2)
-		Export(export_list);
+		Export(list);
 	else
 		printf("Select Wrong Number \n");
 	
-//test
-	Export(import_list);
-
-	return 0;
 }
 
 void print_screen()
@@ -141,13 +136,16 @@ char *GetNextString(char* src, char token, char* buf)
 }
 
 
-stList* Import()
+//stList* Import()
+void Import(stList* list)
 {
+/*
 	stList* list = malloc(sizeof(stList));
 	list->pHead = list->pTail = NULL;
 	list->sort_needs = 1;
 	list->sort_order = 0;
 	list->count_node = 0;
+*/
 /*
 	stNode* node = malloc(sizeof(stNode));
 	node->pNext = NULL;
@@ -208,7 +206,7 @@ stList* Import()
 		strcpy(node->group,temp);
 
 		p = GetNextString(p, ',', temp);
-		node->search_hit = atoi(temp);
+		node->matchedValue = atoi(temp);
 
 		p = GetNextString(p, ',', temp);
 		node->favorite = atoi(temp);
@@ -216,7 +214,7 @@ stList* Import()
 		AddtoTailNode(list,node);
 	}
 	
-	return list;
+//	return list;
 }
 	
 
