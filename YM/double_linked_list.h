@@ -33,11 +33,9 @@ extern void InitializeList(stList* pList);              // 메모리 할당해서 리스�
 stNode* MakeNode(stNode* data);                //메모리 할당해서 노드 만들기
 extern void AddtoTailNode(stList* pList, stNode* data);  //Tail에 노드 추가
 extern void AddtoHeadNode(stList* pList, stNode* data);   // Head에 노드 추가
-//extern void DeleteNode(stList* pList, int index);        // 현재 노드 삭제 하기 (id 기준)
 extern void PrintList(stList* pList);                 // 전체 리스트 출력하기
 extern int IsEmpty(stList* pList);
 extern void CountNode(stList* pList);
-//extern void DeleteNode(stNode* Node, stList* pList, int index);
-extern void DeleteNode(stNode* Node);
+extern void DeleteNode(stList* pList, stNode* Node);
 
 #endif 

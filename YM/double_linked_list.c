@@ -48,13 +48,23 @@ extern void AddtoHeadNode(stList* pList, stNode* data) { //노드를 Head에 추가
 
 
 
-extern void DeleteNode(stNode* Node) {
-      
-    Node->pNext->pPrev = Node->pPrev;
-    Node->pPrev->pNext = Node->pNext;
+extern void DeleteNode(stList* pList, stNode* Node) {
 
-    free(Node);
+    if (Node == pList->pHead) {
+        pList->pHead = Node->pNext;
+
+    }
+    else if (Node == pList->pTail) {
+        pList->pTail = Node->pPrev;
+    }
+    else {
+        Node->pNext->pPrev = Node->pPrev;
+        Node->pPrev->pNext = Node->pNext;
+    }    
+    Node->pNext = NULL;
+    Node->pPrev = NULL;
     Node->id = 0;
+    free(Node);
     return;    
 }
   

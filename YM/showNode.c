@@ -65,7 +65,7 @@ static void subMenu(stNode* Node, stList* pList) {
 
         
         if (i == 1) {
-           DeleteNode(Node);          
+           DeleteNode(pList,Node);          
            system("clear");
            
         }
