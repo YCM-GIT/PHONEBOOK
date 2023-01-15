@@ -1,4 +1,4 @@
-// 230115 현재 통합 빌드 명령어: gcc main.c showlist.c double_linked_list.c newinsertlist.c searchDisplay.c showNode.c showGroup.c Import_Export.c -o main.exe
+// 230115 현재 통합 빌드 명령어: gcc main.c showlist.c double_linked_list.c newinsertlist.c searchDisplay.c showNode.c showGroup.c Import_Export.c ChangeOrder.c -o main.exe
 
 // 변경이력
 // 1. (221231) Node 구조체 변경 (Node → stNode)
@@ -24,7 +24,7 @@
 //#define FILE_NAME "phonebook_sample2.csv"
 
 // 본 파일의 main 함수 아래에 있는 함수 선언부. 개별 파일로 만들고 나면, 주석 처리 필요.
-void ChangeOrder();						// YCM 작성 예정.
+
 void InitializeList1(stList* pList);   // CEB 님이 수정 후, 그것으로 변경 예정.
 
 
@@ -96,7 +96,7 @@ void main(){                 // 필요한 초기화 후, while 루프 진입. �
 			continue;		
 		}
         else if (command == 6){                         					 // 정렬 기준 바꾸기.
-			ChangeOrder();													
+			ChangeOrder(&list_variables);													
 			//printf("ChangeOrder();\n");
 			continue;		
 		}
@@ -110,14 +110,7 @@ void main(){                 // 필요한 초기화 후, while 루프 진입. �
 }
 
 
-
 // 아래는 개별 파일로 만들고 나면, 주석 처리 필요.
-
-
-void ChangeOrder(){                                                         // 테스트용.
-	printf("ChangeOrder();\n");
-}
-
 
 void InitializeList1(stList* pList) {
     //stList* list;

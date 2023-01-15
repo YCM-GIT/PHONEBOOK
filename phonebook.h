@@ -10,5 +10,6 @@ extern stNode* ShowGroup(char* group_name, stList* pList); // JSY. (YCM이 추�
 extern void AddNewNode(stList* pList); // JIJ. (YCM이 추가함)
 extern stNode* searchDisplay(stList* datalist); // YTY. (YCM이 추가함)
 extern void Import_Export(stList* list); // NHM. (YCM이 추가함)
+extern void ChangeOrder(stList* pList); // YCM이 추가함.
 
 #endif 
