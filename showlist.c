@@ -33,8 +33,9 @@ extern stNode* ShowList(stList* pList) {
     
     // 사용자가 index를 선택하도록 하는 기능 추가
     while(limit_ask > 0) {
+        
         printf("\nWhich number would you like to select? (to main menu : '0') : ");
-        scanf("%d",&user_choice);
+        scanf(" %d",&user_choice);
         
         if(user_choice == 0) {
             // printf("quit\n");
