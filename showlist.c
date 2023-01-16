@@ -15,8 +15,7 @@ void Renumbering(stList* pList);
 extern stNode* ShowList(stList* pList) {
     // 변수 선언
     stNode* selected_node, *cur;
-    int i, user_choice=0, limit_ask=3; 
-    char user_choice_char;
+    int i, user_choice=0, limit_ask=3;     
     if(IsEmpty(pList)==1) {   // list가 NULL 이면 NULL 리턴
         printf("This list is empty.\n");
         return NULL;  
@@ -34,10 +33,10 @@ extern stNode* ShowList(stList* pList) {
     
     // 사용자가 index를 선택하도록 하는 기능 추가
     while(limit_ask > 0) {
-        printf("\nWhich number would you like to select? (to main menu : 'q') : ");
-        scanf("%c",&user_choice_char);
-        user_choice = (int)user_choice_char - 48;
-        if(user_choice_char=='q') {
+        printf("\nWhich number would you like to select? (to main menu : '0') : ");
+        scanf("%d",&user_choice);
+        
+        if(user_choice == 0) {
             // printf("quit\n");
             return NULL;    // q를 입력받으면 NULL을 리턴함
         }        
