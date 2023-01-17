@@ -34,28 +34,33 @@ extern stNode* ShowGroup(char* group_name, stList* pList)
 	}
 	//추가한 list를 정렬해주기(이름순으로)
 	//SortList(group_list);
-    PrintList(group_list); 
-	
-	curr_node = group_list->pHead;
-	printf("\nSelect index...."); // 검색 결과 리스트 중 1개의 index값을 입력 받음
-	printf("\n(If you want to come back Main Menu, Input '0')....");
-	scanf("%d",&selectedIndex);
-
-	while(curr_node != NULL)
-	{
-		if(selectedIndex == 0){
-			selectedNode = NULL;
-			break;
-		}
-		else{
-			if(selectedIndex == curr_node->index){
-				selectedNode = curr_node;
-				break;
-			}    
-		}
-		curr_node = curr_node->pNext;
-
+    if(group_list->pHead == NULL){
+		printf("No matched data...Retur to Main Screen...\n");
+		return NULL;
 	}
+	else{
+		PrintList(group_list); 
 	
-    return selectedNode; 
+		curr_node = group_list->pHead;
+		printf("\nSelect index...."); // 검색 결과 리스트 중 1개의 index값을 입력 받음
+		printf("\n(If you want to come back Main Menu, Input '0')....");
+		scanf("%d",&selectedIndex);
+
+		while(curr_node != NULL)
+		{
+			if(selectedIndex == 0){
+				selectedNode = NULL;
+				break;
+			}
+			else{
+				if(selectedIndex == curr_node->index){
+					selectedNode = curr_node;
+					break;
+				}    
+			}
+			curr_node = curr_node->pNext;
+
+		}		
+		return selectedNode; 
+	}
 }
