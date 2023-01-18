@@ -3,7 +3,7 @@
 #include <stdbool.h>
 #include "double_linked_list.h"
 
-// ÇÔ¼ö ±¸Çö
+// í•¨ìˆ˜ êµ¬í˜„
 extern void InitializeList(stList* pList) {
     stList* list = malloc(sizeof(stList));
     list->pHead = list->pTail = NULL;
@@ -16,87 +16,59 @@ extern stNode* MakeNode(stNode* data) {
     stNode* node = malloc(sizeof(stNode));
     node = data;
     node->pPrev = node->pNext = NULL;
-    // id ºÎ¿©ÇÏ´Â ¹æ¹ýÀ» Ãß°¡ °í¹Î
+    // id ë¶€ì—¬í•˜ëŠ” ë°©ë²•ì„ ì¶”ê°€ ê³ ë¯¼
     return node;
-}  //³ëµå¸¦ ¸¸µé±â À§ÇØ ¸Þ¸ð¸® ÇÒ´çÇÏ°í ÃÊ±âÈ­ÇÏ±â
+}  //ë…¸ë“œë¥¼ ë§Œë“¤ê¸° ìœ„í•´ ë©”ëª¨ë¦¬ í• ë‹¹í•˜ê³  ì´ˆê¸°í™”í•˜ê¸°
 
-extern void AddtoTailNode(stList* pList, stNode* data) {   // ³ëµå¸¦ tail¿¡ ³ëµå Ãß°¡
+extern void AddtoTailNode(stList* pList, stNode* data) {   // ë…¸ë“œë¥¼ tailì— ë…¸ë“œ ì¶”ê°€
     stNode* node = MakeNode(data);
-    if (IsEmpty(pList)) {
-        pList->pHead = pList->pTail = node;
-    }
-    else {
+    if(IsEmpty(pList)) {
+        pList->pHead = pList->pTail = node;   
+    } else {
         node->pPrev = pList->pTail;
         node->pNext = NULL;
-        pList->pTail->pNext = node;
-        pList->pTail = node;
+        pList->pTail->pNext = node;        
+        pList->pTail        = node;
     }
-}  //ListÀÇ µÚ¿¡ ½Å±Ô ³ëµå Ãß°¡
+}  //Listì˜ ë’¤ì— ì‹ ê·œ ë…¸ë“œ ì¶”ê°€
 
-extern void AddtoHeadNode(stList* pList, stNode* data) { //³ëµå¸¦ Head¿¡ Ãß°¡    
+extern void AddtoHeadNode(stList* pList, stNode* data) { //ë…¸ë“œë¥¼ Headì— ì¶”ê°€    
     stNode* node = MakeNode(data);
-    if (IsEmpty(pList)) {
-        pList->pHead = pList->pTail = node;
-    }
-    else {
+    if(IsEmpty(pList)) {
+        pList->pHead = pList->pTail = node;   
+    } else {       
         node->pNext = pList->pHead;
-        pList->pHead->pPrev = node;
+        pList->pHead->pPrev = node; 
         pList->pHead = node;
-        node->pPrev = NULL;
+        node->pPrev = NULL;    
     }
-}
-
-
-
-extern void DeleteNode(stList* pList, stNode* Node) {
-
-    if (Node == pList->pHead) {
-        pList->pHead = Node->pNext;
-
-    }
-    else if (Node == pList->pTail) {
-        pList->pTail = Node->pPrev;
-    }
-    else {
-        Node->pNext->pPrev = Node->pPrev;
-        Node->pPrev->pNext = Node->pNext;
-    }    
-    Node->pNext = NULL;
-    Node->pPrev = NULL;
-    Node->id = 0;
-    free(Node);
-    return;    
-}
-  
-
-/*// id¸¦ ¹Þ¾Æ¼­ °°Àº id¸¦ °¡Áø ³ëµå »èÁ¦ ÇÏ±â
+}  
 extern void DeleteNode(stList* pList, int index) {
     stNode* cur;
     if(IsEmpty(pList)) {
-        printf("There is no member.\n");
+        printf("There is no member.\n");    
     } else {
         cur = pList->pHead;
         while(cur->pNext !=NULL) {
-            if (index == cur->index) {   // °°Àºid¸¦ °¡Áø ³ëµå¸¦ Á¦°Å
+            if (index == cur->index) {   // ê°™ì€idë¥¼ ê°€ì§„ ë…¸ë“œë¥¼ ì œê±°
                 cur->pPrev->pNext = cur->pNext;
                 cur->pNext->pPrev = cur->pPrev;
-                free(cur);   // ¸Þ¸ð¸® ÇÒ´ç ÇØÁ¦
+                free(cur);   // ë©”ëª¨ë¦¬ í• ë‹¹ í•´ì œ
                 break;
             }
             cur = cur->pNext;
         }
     }
-}
-*/
+}  // indexë¥¼ ë°›ì•„ì„œ ê°™ì€ indexë¥¼ ê°€ì§„ ë…¸ë“œ ì‚­ì œ í•˜ê¸° 
 
 extern void PrintList(stList* pList) {
     stNode* cur;
-    for (cur = pList->pHead; cur != NULL; cur = cur->pNext) {
+    for (cur = pList->pHead; cur !=NULL ; cur=cur->pNext) {
         printf("%5d ", cur->id);
-        printf("%3d ", cur->index);
-        printf("%30s ", cur->name);
-        printf("%20s ", cur->number);
-        printf("%20s ", cur->group);
+        printf("%3d ",cur->index);
+        printf("%30s ",cur->name);
+        printf("%20s ",cur->number);
+        printf("%20s ",cur->group);
         printf("%3d", cur->favorite);
         printf("\n");
     }
@@ -105,14 +77,14 @@ extern void PrintList(stList* pList) {
 
 extern int IsEmpty(stList* pList) {
     return (pList->pHead == NULL);
-} // ¸®½ºÆ®°¡ ºñ¾îÀÖ´Â Áö È®ÀÎ
+} // ë¦¬ìŠ¤íŠ¸ê°€ ë¹„ì–´ìžˆëŠ” ì§€ í™•ì¸
 
-extern void CountNode(stList* pList) {
-    int count = 0;
+extern void CountNode(stList *pList) {
+    int count=0;
     stNode* cur;
-    for (cur = pList->pHead; cur != NULL; cur = cur->pNext) {
+    for (cur = pList->pHead; cur !=NULL ; cur=cur->pNext) {
         count++;
-    }
-    (*pList).count_node = count;
-    //    printf("%d\n",count);
+    } 
+    (*pList).count_node = count;  
+//    printf("%d\n",count);
 }

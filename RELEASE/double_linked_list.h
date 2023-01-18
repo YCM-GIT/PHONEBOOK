@@ -1,4 +1,3 @@
-
 #ifndef __Double_Linked_List__
 #define __Double_Linked_List__
 
@@ -6,36 +5,44 @@
 #define NUMBER_LENGTH 20
 #define GROUP_LENGTH 20
 
-typedef struct __Node {
-    int id;             // ³ëµå °íÀ¯ÀÇ ¹øÈ£ 10001ºÎÅÍ ½ÃÀÛ
-    int index;         // Á¤·ÄÇÑ ÈÄ ÀÏ·Ä¹øÈ£
-    char name[NAME_LENGTH];     // ¿µ¹® ÀÌ¸§
-    char number[NUMBER_LENGTH]; // ÀüÈ­ ¹øÈ£
+typedef struct __Node {    
+    int id;             // ë…¸ë“œ ê³ ìœ ì˜ ë²ˆí˜¸ 10001ë¶€í„° ì‹œì‘
+    int index;         // ì •ë ¬í•œ í›„ ì¼ë ¬ë²ˆí˜¸
+    char name[NAME_LENGTH];     // ì˜ë¬¸ ì´ë¦„
+    char number[NUMBER_LENGTH]; // ì „í™” ë²ˆí˜¸
     char group[GROUP_LENGTH];
-    bool search_hit; // ÇØ´ç ³ëµå°¡ °Ë»öÁ¶°ÇÀ» ¸¸Á·ÇÑ´Ù¸é ÀÌ flag¸¦ 1·Î ¼³Á¤ÇØ¼­ ´ÙÀ½ÇÔ¼ö·Î ³Ñ°ÜÁÜ ¸ŞÀÎ¸Ş´º·Î µ¹¾Æ°¥ ¶§ 0À¸·Î ÃÊ±âÈ­ ÇÊ¿ä
-    bool favorite; // Áñ°ÜÃ£±â
-
+    bool matchedValue; // search_hit â†’ matchedValue (230108). í•´ë‹¹ ë…¸ë“œê°€ ê²€ìƒ‰ì¡°ê±´ì„ ë§Œì¡±í•œë‹¤ë©´ ì´ flagë¥¼ 1ë¡œ ì„¤ì •í•´ì„œ ë‹¤ìŒí•¨ìˆ˜ë¡œ ë„˜ê²¨ì¤Œ ë©”ì¸ë©”ë‰´ë¡œ ëŒì•„ê°ˆ ë•Œ 0ìœ¼ë¡œ ì´ˆê¸°í™” í•„ìš”
+    bool favorite; // ì¦ê²¨ì°¾ê¸°
+    
     struct __Node* pPrev;
-    struct __Node* pNext;
-} stNode;  // ³ëµå ±¸Á¶Ã¼ 
+    struct __Node* pNext;    
+} stNode;  // ë…¸ë“œ êµ¬ì¡°ì²´ 
 
 typedef struct __List {
     stNode* pHead;
-    stNode* pTail;
+    stNode* pTail;    
     bool sort_needs;
     int sort_order;
     int count_node;
-} stList;   // ¸®½ºÆ® ±¸Á¶Ã¼
+} stList;   // ë¦¬ìŠ¤íŠ¸ êµ¬ì¡°ì²´
 
-// ÇÔ¼ö ¼±¾ğ
+// YTY êµ¬ì¡°ì²´. github - TY ë¸Œëœì¹˜ì—ì„œ ì´ ë¶€ë¶„ë§Œ ë³µë¶™í•¨.
+typedef struct __SearchedList
+{
+    struct __SearchedList* NextNode;
+    struct __SearchedList* PrevNode;
+    stNode* node;
+    int matchedWith;
+} stSearchedList;  // ê²€ìƒ‰ëœ ë¦¬ìŠ¤íŠ¸ë¥¼ ê°€ì§€ëŠ” êµ¬ì¡°ì²´
 
-extern void InitializeList(stList* pList);              // ¸Ş¸ğ¸® ÇÒ´çÇØ¼­ ¸®½ºÆ® ¸¸µé±â
-stNode* MakeNode(stNode* data);                //¸Ş¸ğ¸® ÇÒ´çÇØ¼­ ³ëµå ¸¸µé±â
-extern void AddtoTailNode(stList* pList, stNode* data);  //Tail¿¡ ³ëµå Ãß°¡
-extern void AddtoHeadNode(stList* pList, stNode* data);   // Head¿¡ ³ëµå Ãß°¡
-extern void PrintList(stList* pList);                 // ÀüÃ¼ ¸®½ºÆ® Ãâ·ÂÇÏ±â
-extern int IsEmpty(stList* pList);
-extern void CountNode(stList* pList);
-extern void DeleteNode(stList* pList, stNode* Node);
+// í•¨ìˆ˜ ì„ ì–¸
+extern void InitializeList(stList* pList);              // ë©”ëª¨ë¦¬ í• ë‹¹í•´ì„œ ë¦¬ìŠ¤íŠ¸ ë§Œë“¤ê¸°
+stNode* MakeNode(stNode* data);                //ë©”ëª¨ë¦¬ í• ë‹¹í•´ì„œ ë…¸ë“œ ë§Œë“¤ê¸°
+extern void AddtoTailNode(stList* pList, stNode* data);  //Tailì— ë…¸ë“œ ì¶”ê°€
+extern void AddtoHeadNode(stList* pList, stNode* data);   // Headì— ë…¸ë“œ ì¶”ê°€
+extern void DeleteNode(stList* pList, int index);        // í˜„ì¬ ë…¸ë“œ ì‚­ì œ í•˜ê¸° (id ê¸°ì¤€)
+extern void PrintList(stList* pList);                 // ì „ì²´ ë¦¬ìŠ¤íŠ¸ ì¶œë ¥í•˜ê¸°
+extern int IsEmpty(stList *pList) ;
+extern void CountNode(stList *pList);
 
 #endif 

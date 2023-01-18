@@ -65,7 +65,8 @@ static void subMenu(stNode* Node, stList* pList) {
 
         
         if (i == 1) {
-           DeleteNode(pList,Node);          
+           DeleteNode(pList, index);
+           printf("Delete Success \n");
            system("clear");
            
         }
@@ -81,7 +82,6 @@ static void subMenu(stNode* Node, stList* pList) {
 
       else {
             break;
-            return;
            
         }
        
@@ -93,78 +93,70 @@ static void subMenu(stNode* Node, stList* pList) {
 
 static void EditMenu(stNode* Node, stList* pList) {
     int num = 0;
-    int j = 0;   
+    int j = 0;
+   
 
     system("clear");
 
-    if (Node->id == 0) {
-        printf("There is no Person \n");
-        subMenu(Node, pList);
-        return;
-    } 
-    else {
 
-        while (j < 5) {
+    while (j < 5) {
 
-            printf("%5d ", Node->id);
-            printf("%3d ", Node->index);
-            printf("%30s ", Node->name);
-            printf("%20s ", Node->number);
-            printf("%20s ", Node->group);
-            printf("%3d", Node->favorite);
+        printf("%5d ", Node->id);
+        printf("%3d ", Node->index);
+        printf("%30s ", Node->name);
+        printf("%20s ", Node->number);
+        printf("%20s ", Node->group);
+        printf("%3d", Node->favorite);
+        printf("\n");
+
+        while (num < 5) {
             printf("\n");
+            printf("1: Name \n");
+            printf("2: Phone Number \n");
+            printf("3. Group \n");
+            printf("4. Favorate \n");
+            printf("5. sub Menu \n");
+            printf("Press number: ");
+            scanf("%d", &num);
 
-            while (num < 5) {
-                printf("\n");
-                printf("1: Name \n");
-                printf("2: Phone Number \n");
-                printf("3. Group \n");
-                printf("4. Favorate \n");
-                printf("5. sub Menu \n");
-                printf("Press number: ");
-                scanf("%d", &num);
+            switch (num)
+            {
+            case 1:
+                EditName(Node);
 
-                switch (num)
-                {
-                case 1:
-                    EditName(Node);
+                break;
+            case 2:
+                EditNumber(Node);
 
-                    break;
-                case 2:
-                    EditNumber(Node);
+                break;
+            case 3:
+                EditGroup(Node);
 
-                    break;
-                case 3:
-                    EditGroup(Node);
+                break;
+            case 4:
+                EditFavorate(Node);
 
-                    break;
-                case 4:
-                    EditFavorate(Node);
-
-                    break;
-                default:
-                    break;
-                }
+                break;
+            default:
                 break;
             }
-            j = num;
-
+            break;
         }
-        system("clear");
-        PrintShowNode(Node);
-        subMenu(Node, pList);
-        return;
+        j = num;
+
     }
+    system("clear");
+    PrintShowNode(Node);
+    subMenu(Node, pList);
+    return;
 
 }
 
 
 static void EditName(stNode *Node) {
-    char sName[NAME_LENGTH];
+
     printf("New name: ");
-    //scanf("%s", Node->name); 
-    scanf(" %[^\n]s", sName);	
-    strcpy(Node->name, sName);
+    scanf("%s", Node->name);                        
 
     system("clear");
 }
@@ -180,11 +172,9 @@ static void EditNumber(stNode* Node) {
 
 
 static void EditGroup(stNode* Node) {
-    char sGroup[GROUP_LENGTH];
+    
     printf("New Group: ");
-    //scanf("%s", Node->group);
-    scanf(" %[^\n]s", sGroup);
-    strcpy(Node->group, sGroup);
+    scanf("%s", Node->group);
 
     system("clear");
 }
@@ -205,48 +195,35 @@ static void EditFavorate(stNode* Node) {
 
 static void StartCalling(stNode* Node) {
     int num;
-    int i; 
+    int i;    
 
-    if (Node->id == 0) {
-        printf("There is no Person \n");   
-        sleep(1);
+    while (1) 
+    {
         system("clear");
-        return;
-    }
+        PrintShowNode(Node);
+       
+        for (i = 0;i < 5; i++) {
+            printf(ANSI_COLOR_RED "*Calling*" ANSI_COLOR_RESET "");
+            printf(ANSI_COLOR_GREEN "*Calling*" ANSI_COLOR_RESET "");
+            printf(ANSI_COLOR_YELLOW "*Calling*" ANSI_COLOR_RESET "");
+            printf(ANSI_COLOR_BLUE "*Calling*" ANSI_COLOR_RESET "");
+            printf(ANSI_COLOR_MAGENTA "*Calling*" ANSI_COLOR_RESET "");
+            printf(ANSI_COLOR_CYAN "*Calling*" ANSI_COLOR_RESET "\n");
 
-    else {
+            sleep(1);
 
-        while (1)
-        {
+        };
+
+        printf("If you want to hang up, press 1:   ");
+        scanf("%d", &num);
+
+        if (num == 1) { 
             system("clear");
             PrintShowNode(Node);
-
-            for (i = 0;i < 5; i++) {
-                printf(ANSI_COLOR_RED "*Calling*" ANSI_COLOR_RESET "");
-                printf(ANSI_COLOR_GREEN "*Calling*" ANSI_COLOR_RESET "");
-                printf(ANSI_COLOR_YELLOW "*Calling*" ANSI_COLOR_RESET "");
-                printf(ANSI_COLOR_BLUE "*Calling*" ANSI_COLOR_RESET "");
-                printf(ANSI_COLOR_MAGENTA "*Calling*" ANSI_COLOR_RESET "");
-                printf(ANSI_COLOR_CYAN "*Calling*" ANSI_COLOR_RESET "\n");
-
-                sleep(1);
-
-            };
-
-            printf("If you want to hang up, press 1:   ");
-            scanf("%d", &num);
-
-            if (num == 1) {
-                system("clear");
-                PrintShowNode(Node);
-                break;
-            }
-
+            break;
         }
-    }
 
-    
-
+     }
  }
  
 
@@ -261,7 +238,8 @@ static int PrintShowNode(stNode* Node) {
     printf("%20s ", Node->number);
     printf("%20s ", Node->group);
     printf("%3d", Node->favorite);
-    printf("\n");       
+    printf("\n");   
+    
 
     return 0;
 }
