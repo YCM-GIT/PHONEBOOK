@@ -10,6 +10,8 @@
 // 7. (220115) 필요 없는 주석 처리 삭제. 1) 개별 파일로 만든 함수들, 2) 테스트용 문구들.
 // 8. 시작 전에 hard-coded sample을 추가할 것인지 묻지 않고, 메인 메뉴에 곧바로 진입. (import 기능 권장)
 // 9. 설명 필요한 주석 추가.
+// 10. (220121) 맨 마지막 else문에 버퍼 비워주는 getchar() while문 추가.
+// 11. your choice 보여주는 것을 각 command if문 안으로 이동 (틀렸을 때는 안 보여주기 위해).
 
 #include <stdio.h> 
 #include <stdlib.h>
@@ -37,14 +39,17 @@ void main(){                 // 필요한 초기화 후, while 루프 진입. �
 	while(1){                           // 메인 화면. 프로그램 동작 동안 계속 이 while 문 안에 있는 상태이다.
 		printf("------- Main Menu -------\n1. add a new node\n2. search\n3. show list\n4. show group\n5. import/export\n6. change order\n-------------------------\n\n");
 		printf("Input your command number: ");
-		scanf("%d", &command);
 
-		printf("your choice: %d\n", command);
+		scanf("%d", &command);
+		
 		if (command == 1) {
+			printf("your choice: %d\n", command);
 			AddNewNode(&list_variables);								// 신규 노드 추가 함수 (JIJ)
 			continue;
 		}
 		else if (command == 2){
+			printf("your choice: %d\n", command);
+
 			// searchDisplay 함수를 호출 후, 1) 사용자가 노드를 선택하면 ShowNode 함수 호출. 2) 제대로 선택하지 않으면 (NULL을 리턴 받아서) 메인 메뉴로 돌아감.
 			stNode* p_temp_node = searchDisplay(&list_variables);		// 검색 함수 (YTY)
 			if (p_temp_node == NULL){									// 이 함수가 NULL값을 리턴하면, while문(메인 메뉴)으로 복귀.
@@ -57,6 +62,8 @@ void main(){                 // 필요한 초기화 후, while 루프 진입. �
 			continue;
 		}
 		else if (command == 3){
+			printf("your choice: %d\n", command);
+
 			// ShowList 함수를 호출 후, 1) 사용자가 노드를 선택하면 ShowNode 함수 호출. 2) 제대로 선택하지 않으면 (NULL을 리턴 받아서) 메인 메뉴로 돌아감.
 			stNode* p_temp_node = ShowList(&list_variables);      		// List 보여주는 함수 (CEB)
 			if (p_temp_node == NULL){									// 이 함수가 NULL값을 리턴하면, while문(메인 메뉴)으로 복귀.
@@ -69,6 +76,8 @@ void main(){                 // 필요한 초기화 후, while 루프 진입. �
 			continue;
 		}
 		else if (command == 4){
+			printf("your choice: %d\n", command);
+
 			// 어느 그룹을 보여줄 것인지 묻고, 문자열을 ShowGroup에 넘겨주는 기능 시작.			
 			printf("------- Group list -------\n");
 			printf("DOMAIN\nSECURITY\nTEAM\nVEHICLE\n");
@@ -91,17 +100,21 @@ void main(){                 // 필요한 초기화 후, while 루프 진입. �
 			
 			continue;		
 		}
-        else if (command == 5){                          					// import, export 함수 (NHM)
-			Import_Export(&list_variables);
+        else if (command == 5){   
+			printf("your choice: %d\n", command);
+			Import_Export(&list_variables);                       					// import, export 함수 (NHM)
 			continue;		
 		}
-        else if (command == 6){                         					 // 정렬 기준 바꾸기.
-			ChangeOrder(&list_variables);													
-			//printf("ChangeOrder();\n");
+        else if (command == 6){
+			printf("your choice: %d\n", command);
+			ChangeOrder(&list_variables);		                         					 // 정렬 기준 바꾸기.											
 			continue;		
 		}
 		
 		else {																// (메인 메뉴 리스트의 숫자인 1~6이 아닌) 다른 문자를 입력했을 경우에는, while문(메인 메뉴)으로 복귀. 
+			while(getchar()!='\n'){											// command를 정상적으로 입력하지 않았다면(문자 입력 포함), 입력값을 비워줌. 이게 없으면 문자 입력 시 무한루프 돎.
+
+			}
 			printf("Wrong command. Type again.\n");
 			continue;														
 		}
