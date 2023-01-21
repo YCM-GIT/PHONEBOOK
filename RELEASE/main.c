@@ -77,17 +77,8 @@ void main(){                 // 필요한 초기화 후, while 루프 진입. �
 		}
 		else if (command == 4){
 			printf("your choice: %d\n", command);
-
-			// 어느 그룹을 보여줄 것인지 묻고, 문자열을 ShowGroup에 넘겨주는 기능 시작.			
-			printf("------- Group list -------\n");
-			printf("DOMAIN\nSECURITY\nTEAM\nVEHICLE\n");
-			printf("--------------------------\n");
-			printf("Type Group name correctly: ");
 			char group_name[GROUP_LENGTH];
-			scanf("%s", group_name);
-			printf("%s\n", group_name);
-			// 어느 그룹을 보여줄 것인지 묻고, 문자열을 ShowGroup에 넘겨주는 기능 완료.
-
+			SelectGroup(&list_variables, group_name);					// 현재 Node 리스트의 그룹들을 중복 없이, 오름차순으로 정렬해서 보여줌.
 
 			// ShowGroup 함수를 호출 후, 1) 사용자가 노드를 선택하면 ShowNode 함수 호출. 2) 제대로 선택하지 않으면 (NULL을 리턴 받아서) 메인 메뉴로 돌아감.
 			stNode* p_temp_node = ShowGroup(group_name, &list_variables);	// Group 보여주는 함수 (JSY)
