@@ -1,4 +1,4 @@
-// 230115 현재 통합 빌드 명령어: gcc main.c showlist.c double_linked_list.c newinsertlist.c searchDisplay.c showNode.c showGroup.c Import_Export.c ChangeOrder.c -o main.exe
+// 230406 현재 통합 빌드 명령어: gcc main.c showlist.c double_linked_list.c newinsertlist.c searchDisplay.c showNode.c showGroup.c Import_Export.c ChangeOrder.c SelectGroup.c -o main.exe
 
 // 변경이력
 // 1. (221231) Node 구조체 변경 (Node → stNode)
